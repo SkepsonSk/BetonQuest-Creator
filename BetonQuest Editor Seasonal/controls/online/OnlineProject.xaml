@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="BetonQuest_Editor_Seasonal.controls.online.OnlineProject"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.controls.online"
+             mc:Ignorable="d" 
+             d:DesignHeight="95" d:DesignWidth="300"
+             Background="#bfbfbf"
+             Cursor="Hand"
+             MouseDown="Project_MouseDown"
+             MouseLeave="Project_MouseLeave"
+             Margin="0, 0, 0, 5">
+    
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Name="Quality"/>
+
+        <StackPanel Grid.Column="1" Margin="5, 10, 0, 0">
+            <TextBlock Name="Name" Style="{StaticResource DefaultText73}" FontSize="20"> Name of the project </TextBlock>
+            <TextBlock Name="Description" Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, -2.5, 0, 0"> Description </TextBlock>
+            <TextBlock Name="Creator" Style="{StaticResource DefaultText73}" FontSize="16" Margin="0, 5, 0, 0" > Created by user</TextBlock>
+        </StackPanel>
+
+        <WrapPanel Name="Actions" VerticalAlignment="Bottom" Grid.Column="1" Margin="5, 0, 0, 5" Opacity="0">
+            <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5" Margin="0, 0, 2.5, 0"> Learn more </Button>
+            <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5"> Download </Button>
+        </WrapPanel>
+
+    </Grid>
+    
+</UserControl>

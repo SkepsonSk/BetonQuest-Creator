@@ -1,0 +1,135 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversations.StatementEditor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversations"
+      mc:Ignorable="d" 
+      Background="{StaticResource BackgroundOpacity}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="StatementEditor">
+
+    <Page.Resources>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="#8c8c8c"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="#8c8c8c"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="RichTextBox">
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="#8c8c8c"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Name="Panel" Grid.Column="1" Grid.Row="1" Background="#bfbfbf">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20, 0, 0, 0">
+                <TextBlock Name="Type" FontSize="20"> Type </TextBlock>
+                <TextBlock Name="Editing" Visibility="Hidden" VerticalAlignment="Bottom" FontSize="15" Foreground="#cc7a00"  Margin="5, 0, 0, 0"> EDITING! </TextBlock>
+            </WrapPanel>
+            
+            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 20, 0">
+                <TextBlock FontSize="30" VerticalAlignment="Center" Foreground="#ff4d4d" Cursor="Hand" MouseDown="ReturnTextBlock_MouseDown">&lt;</TextBlock>
+                <TextBlock FontSize="20" VerticalAlignment="Center" Foreground="#ff4d4d" Margin="5, 0, 0, 0" Cursor="Hand" MouseDown="CloseTextBlock_MouseDown">✖</TextBlock>
+            </WrapPanel>
+
+            <DockPanel Grid.Row="1" Margin="0, 10, 0, 0">
+
+                <Button Name="DoneButton" Opacity="0" IsEnabled="False" Style="{StaticResource ModernButtonStyle}" Foreground="#239023" BorderBrush="#239023" Width="300" Margin="0, 10, 0, 10" Padding="10" DockPanel.Dock="Bottom" Click="DoneButton_Click" >✔</Button>
+
+                <UniformGrid Columns="4" Margin="10, 0, 10, 0" DockPanel.Dock="Top">
+
+                    <StackPanel>
+                        <TextBlock FontSize="18" TextAlignment="Center"> Statement ID:</TextBlock>
+                        <TextBox Name="ID" FontSize="18" TextChanged="TextChanged" />
+                        <Separator Margin="0, 0, 0, 20"/>
+
+                        <TextBlock FontSize="18"  TextAlignment="Center"> Content:</TextBlock>
+                        <RichTextBox Name="Content" AcceptsReturn="True" FontSize="18" TextChanged="TextChanged" />
+                        <Separator/>
+
+                        <Button Name="IsStart" Style="{StaticResource FlatButtonStyle}" Background="#b3b3b3" Padding="10" Margin="0, 20, 0, 0" Click="StartButton_Click"> Start? </Button>
+
+                    </StackPanel>
+
+                    <DockPanel Margin="10, 0, 0, 0">
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBlock FontSize="18" TextAlignment="Center"> Conditions: </TextBlock>
+                            <TextBox FontSize="18" />
+                            <Separator Margin="0, 0, 0, 10"/>
+                        </StackPanel>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                             <StackPanel Name="Conditions" DockPanel.Dock="Bottom"/>
+                        </ScrollViewer>
+
+                    </DockPanel>
+
+                    <DockPanel Margin="10, 0, 0, 0">
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBlock FontSize="18" TextAlignment="Center"> Events:</TextBlock>
+                            <TextBox FontSize="18" />
+                            <Separator Margin="0, 0, 0, 10"/>
+                        </StackPanel>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Name="Events" DockPanel.Dock="Bottom"/>
+                        </ScrollViewer>
+
+                    </DockPanel>
+
+                    <DockPanel Margin="10, 0, 0, 0">
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBlock FontSize="18" TextAlignment="Center"> Next statements:</TextBlock>
+                            <TextBox FontSize="18" />
+                            <Separator Margin="0, 0, 0, 10"/>
+                        </StackPanel>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Name="NextStatements" DockPanel.Dock="Bottom"/>
+                        </ScrollViewer>
+
+                    </DockPanel>
+
+                </UniformGrid>
+      
+            </DockPanel>
+
+        </Grid>
+
+    </Grid>
+</Page>

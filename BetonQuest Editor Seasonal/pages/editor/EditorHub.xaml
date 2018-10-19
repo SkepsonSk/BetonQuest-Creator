@@ -1,0 +1,86 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.editor.EditorHub"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages.editor"
+      mc:Ignorable="d" 
+      Background="{StaticResource Background}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="EditorHub">
+
+    <Page.Resources>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+    </Page.Resources>
+
+    <DockPanel LastChildFill="True">
+
+            <UniformGrid DockPanel.Dock="Top" Name="NavigatorPanel" Columns="7" Height="30" Background="#bfbfbf" VerticalAlignment="Top">
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Start" Click="NavigationButton_Click">Start</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Conversations" Click="NavigationButton_Click">Conversations</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Events" Click="NavigationButton_Click">Events</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Conditions" Click="NavigationButton_Click">Conditions</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Objectives"  Click="NavigationButton_Click">Objectives</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Journal" Click="NavigationButton_Click">Journal</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Items" Click="NavigationButton_Click">Items</Button>
+            </UniformGrid>
+
+        <Grid Name="AlertBar" Height="30" Margin="0, 5, 0, 0" DockPanel.Dock="Bottom">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Name="AlertText" FontSize="14" VerticalAlignment="Center" Margin="10, 0, 0, 0"> !ALERT! </TextBlock>
+
+            <WrapPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+
+                <Button Name="ActionButton" Style="{StaticResource ModernButtonStyle}" Padding="2" Foreground="White" BorderBrush="White" Margin="0, 0, 5, 0" Click="ActionButton_Click">Action</Button>
+                <Button Name="ActionSettings" Style="{StaticResource ModernButtonStyle}" Padding="2" Foreground="White" BorderBrush="White" Margin="0, 0, 10, 0">Settings</Button>
+
+            </WrapPanel>            
+        </Grid >
+
+        <StackPanel Name="ToolbarPanel" DockPanel.Dock="Bottom" Background="Transparent">
+            <TextBlock Name="SwitchToolbar" Style="{StaticResource DefaultText8c}" TextAlignment="Center" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Cursor="Hand" Margin="0, 0, 10, 0" MouseDown="SwitchToolbar_MouseDown"> ▲ </TextBlock>
+        </StackPanel>
+
+        <DockPanel Name="Toolbar" DockPanel.Dock="Bottom" Margin="0, 0, 10, 2.5" Background="Transparent">
+
+            <WrapPanel DockPanel.Dock="Right" VerticalAlignment="Bottom">
+                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" FontSize="20" Width="40" Height="40" Click="UndoButton_Click">&lt;</Button>
+                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" FontSize="20" Width="40" Height="40" Click="RedoButton_Click">&gt;</Button>
+                
+                <TextBlock  Style="{StaticResource DefaultText8c}" FontSize="15" VerticalAlignment="Bottom" Margin="5, 0, 0, 0" Cursor="Hand" MouseDown="SwitchToolbar_MouseDown"> ▼ </TextBlock>
+            </WrapPanel>
+            
+            <WrapPanel DockPanel.Dock="Left" Margin="20, 0, 0, 0" VerticalAlignment="Bottom">
+                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Cursor="Hand">Save</Button>
+                <TextBlock Style="{StaticResource DefaultText8c}" Foreground="#ff9933" VerticalAlignment="Center" FontSize="20" Margin="5, 0, 5, 0">-</TextBlock>
+                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Cursor="Hand">Export</Button>
+                <TextBlock Style="{StaticResource DefaultText8c}" Foreground="#ff9933" VerticalAlignment="Center" FontSize="20" Margin="5, 0, 5, 0">-</TextBlock>
+                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Margin="0, 0, 15, 0" Cursor="Hand">Upload</Button>
+                
+                <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2" Stroke="#8c8c8c" />
+                
+                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="15, 0, 5, 0" Cursor="Hand">New</Button>
+                <TextBlock Style="{StaticResource DefaultText8c}" VerticalAlignment="Center" FontSize="20"> - </TextBlock>
+                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="5, 0, 5, 0" Cursor="Hand">Open</Button>
+                <TextBlock Style="{StaticResource DefaultText8c}" VerticalAlignment="Center" FontSize="20"> -</TextBlock>
+                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="5, 0, 0, 0" Cursor="Hand">Welcome page</Button>
+            </WrapPanel>
+            
+        </DockPanel>
+
+        <Frame Name="NavigatorFrame" NavigationUIVisibility="Hidden"/>
+
+    </DockPanel>
+
+</Page>

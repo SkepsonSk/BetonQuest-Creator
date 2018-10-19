@@ -1,0 +1,79 @@
+﻿<Window x:Class="BetonQuest_Editor_Seasonal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal"
+        mc:Ignorable="d"
+        Background="#cccccc"
+        Title="BetonQuest Editor - Hello!" Height="600" Width="1000">
+
+    <Grid>
+
+        <StackPanel Name="MessageFrame" Visibility="Collapsed" Panel.ZIndex="3"  Background="#bfbfbf" HorizontalAlignment="Center" VerticalAlignment="Top" Width="500"  Margin="0, 75, 0, 0">
+
+            <TextBlock FontSize="20" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand" MouseDown="CloseMessageFrame_MouseDown"> ✖</TextBlock>
+
+            <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="15, 0, 15, 0"> Title </TextBlock>
+            <TextBlock Style="{StaticResource DefaultText73}" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="15, 5, 15, 0"> Message dada dada dad dadad daa dada</TextBlock>
+
+            <WrapPanel Margin="20" HorizontalAlignment="Center">
+                
+                <Button Name="MessageFrameAction1" Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5" Margin="0, 0, 5, 0">A1</Button>
+                <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5" Margin="0, 0, 5, 0">A2</Button>
+                <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5">A3</Button>
+            </WrapPanel>
+            
+        </StackPanel>
+
+        <DockPanel Panel.ZIndex="1">
+        
+            <Grid Name="ActionBar" DockPanel.Dock="Bottom">
+
+                <TextBlock Style="{StaticResource DefaultText73}" HorizontalAlignment="Left" Foreground="White" FontSize="16" Margin="10, 7.5, 0, 7.5"> Content</TextBlock>
+
+                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 10, 0">
+
+                    <Button Style="{StaticResource ModernButtonStyle}" Foreground="White" BorderBrush="White" FontSize="14" Padding="2.5" Margin="0, 0, 5, 0"> A1 </Button>
+                    <Button Style="{StaticResource ModernButtonStyle}" Foreground="White" BorderBrush="White" FontSize="14" Padding="2.5"> A2 </Button>
+                
+                </WrapPanel>
+            
+            </Grid>
+
+            <Grid Name="ColorBar" DockPanel.Dock="Bottom" Background="#bfbfbf" Visibility="Collapsed">
+
+                <WrapPanel Name="Colors" HorizontalAlignment="Left" Margin="10, 5, 0, 5">
+                    <Rectangle Fill="Black" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="DarkBlue" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="ForestGreen" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Aqua" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Firebrick" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Purple" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Orange" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="DarkGray" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Gray" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Aquamarine" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="SlateBlue" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Aquamarine" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="DarkSalmon" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="LightPink" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                    <Rectangle Fill="Yellow" Width="30" Height="30" RadiusX="30" RadiusY="30" Margin="2.5" Cursor="Hand"/>
+                </WrapPanel>
+
+                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Underline" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Underline </TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Strikethrough" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> STRIKE </TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73Italic}" FontSize="18" Margin="0, 0, 30, 0" Cursor="Hand"> Italic </TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Reset </TextBlock>
+                </WrapPanel>
+
+            </Grid>
+
+            <Frame Name="DisplayFrame" NavigationUIVisibility="Hidden" DockPanel.Dock="Top"/>
+
+        </DockPanel>
+
+    </Grid>
+    
+</Window>

@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="BetonQuest_Editor_Seasonal.controls.View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.controls"
+             mc:Ignorable="d" 
+             Background="{StaticResource ControlBackground}"
+             d:DesignHeight="100" d:DesignWidth="300">
+
+    <Grid>
+
+        <StackPanel Margin="10" VerticalAlignment="Center">
+            <TextBlock Name="Head" Style="{StaticResource DefaultText73}" FontSize="25" Margin="0, 0, 0, -5"> Head</TextBlock>
+            <TextBlock Name="Body" Style="{StaticResource DefaultText73}" FontSize="18"> Body</TextBlock>
+        </StackPanel>
+
+        <Button Name="SpecialButton" Style="{StaticResource ModernButtonStyle}" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5" Margin="0, 0, 10, 0" Visibility="Collapsed"> SPECIAL </Button>
+
+    </Grid>
+    
+
+
+</UserControl>

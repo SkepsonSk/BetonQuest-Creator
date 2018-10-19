@@ -1,0 +1,30 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.LoadingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages"
+      mc:Ignorable="d" 
+      Background="{StaticResource Background}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="LoadingPage">
+
+    <Grid>
+
+        <Frame Name="ConversationsPreparator" Opacity="0"/>
+        <Frame Name="EventsPreparator" Opacity="0"/>
+        <Frame Name="ConditionsPreparator" Opacity="0"/>
+        <Frame Name="ObjectivesPreparator" Opacity="0"/>
+        <Frame Name="JournalPreparator" Opacity="0"/>
+        <Frame Name="ItemsPreparator" Opacity="0"/>
+        <Frame Name="StatementsPreparator" Opacity="0"/>
+
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource DefaultText8c}" FontSize="25" TextAlignment="Center"> Your Project is being prepared</TextBlock>
+            <TextBlock Style="{StaticResource DefaultText8c}" FontSize="20" TextAlignment="Center"> Please, allow up to one second :)</TextBlock>
+        </StackPanel>
+
+
+    </Grid>
+    
+</Page>

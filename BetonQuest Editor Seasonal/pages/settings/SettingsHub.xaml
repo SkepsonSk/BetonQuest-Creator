@@ -1,0 +1,39 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.settings.SettingsHub"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages.settings"
+      mc:Ignorable="d" 
+      Background="{StaticResource Background}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="SettingsHub">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="10, 10, 0, 0">
+
+            <TextBlock Style="{StaticResource DefaultText8c}" FontSize="20" Margin="0, 0, 0, 10"> Settings: </TextBlock>
+            
+            <WrapPanel>
+                <TextBlock Style="{StaticResource DefaultText73}" FontSize="20" VerticalAlignment="Center" Margin="0, 0, 5, 0"> ∞ </TextBlock>
+                <TextBlock Style="{StaticResource DefaultText8c}" FontSize="18" VerticalAlignment="Center"> General </TextBlock>
+            </WrapPanel>
+
+            <WrapPanel Tag="EnchantPacks"  Cursor="Hand" MouseDown="MenuButton_Click">
+                <TextBlock Style="{StaticResource DefaultText73}" FontSize="20" VerticalAlignment="Center" Margin="0, 0, 5, 0"> ☆ </TextBlock>
+                <TextBlock Style="{StaticResource DefaultText8c}" FontSize="18" VerticalAlignment="Center" > Enchant Packs</TextBlock>
+            </WrapPanel>
+
+        </StackPanel>
+
+        <Frame Name="NavigatorFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+    </Grid>
+    
+</Page>

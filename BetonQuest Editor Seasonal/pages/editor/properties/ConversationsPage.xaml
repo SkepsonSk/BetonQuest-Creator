@@ -1,0 +1,109 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.editor.properties.ConversationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages.editor.properties"
+      mc:Ignorable="d" 
+      Background="{StaticResource Background}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="ConversationsPage">
+    <Page.Resources>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="#8c8c8c"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            <Setter Property="Foreground" Value="#8c8c8c"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+        </Style>
+
+    </Page.Resources>
+
+    <Grid Margin="0, 40, 0, 0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Frame Name="Editor" Grid.ColumnSpan="2" Visibility="Hidden" Panel.ZIndex="4"/>
+
+        <Grid Name="LeftPanel">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.75*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1">
+
+                    <TextBlock HorizontalAlignment="Center" FontSize="25" Margin="0, 0, 0, 15"> New conversation: </TextBlock>
+                    
+                    <UniformGrid Columns="2" Grid.Column="1">
+
+                        <StackPanel Margin="0, 0, 10, 0">
+                            <TextBlock HorizontalAlignment="Center" FontSize="18"> NPC name </TextBlock>
+                            <TextBox Name="NameTextBox" TextAlignment="Center" FontSize="18" TextChanged="TextChanged"/>
+                            <Separator/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" FontSize="18"> NPC ID</TextBlock>
+                            <TextBox Name="IDTextBox" TextAlignment="Center" FontSize="18" TextChanged="IDTextBox_TextChanged" PreviewKeyDown="IDTextBox_PreviewKeyDown"/>
+                            <Separator/>
+                        </StackPanel>
+
+                    </UniformGrid>
+
+                    <Button Name="DoneButton" Opacity="0" IsEnabled="False" Style="{StaticResource ModernButtonStyle}" Padding="10" FontSize="18" Width="300" Margin="0, 10, 0, 0" Click="DoneButton_Click"> Done! </Button>
+                    
+                </StackPanel>
+                
+            </Grid>
+
+            <StackPanel Grid.Row="1" Margin="100, 50, 100, 0">
+                <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center">
+                    Conversations are direct form of communication
+                    between the player and the quester-npc. In the conversation
+                    you can run events and show different dialog-options depending
+                    on a condition.
+                </TextBlock>
+
+            </StackPanel>
+
+
+        </Grid>
+
+        <DockPanel Name="RightPanel" Grid.Column="1">
+
+
+            <TextBlock Name="ConversationsTitle" HorizontalAlignment="Center" FontFamily="Segoe UI Light" TextAlignment="Center" FontSize="25" Margin="0, 0, 0, 0" DockPanel.Dock="Top"> Created conversations:</TextBlock>
+            <TextBox FontFamily="Segoe UI Light" FontSize="18" Background="Transparent" Foreground="#8c8c8c" BorderThickness="0" Margin="0, 0, 0, 2.5" TextAlignment="Center" DockPanel.Dock="Top"/>
+
+            <Separator Margin="0, 0, 0, 10" DockPanel.Dock="Top"/>
+
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" DockPanel.Dock="Bottom" Margin="0, 0, 0, 20">
+                <StackPanel Name="Conversations" />
+            </ScrollViewer>
+
+        </DockPanel>
+
+
+
+    </Grid>
+</Page>
