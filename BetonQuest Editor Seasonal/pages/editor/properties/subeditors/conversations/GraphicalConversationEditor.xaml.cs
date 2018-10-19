@@ -1,10 +1,14 @@
 ﻿using BetonQuest_Editor_Seasonal.controls.gcreator;
 using BetonQuest_Editor_Seasonal.logic.gcreator;
+using BetonQuest_Editor_Seasonal.logic.gcreator.presentation;
 using BetonQuest_Editor_Seasonal.logic.structure;
 using BetonQuest_Editor_Seasonal.logic.structure.conversating;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -66,59 +70,38 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             {
                 point = e.GetPosition(Workspace);
 
-                if (WelcomeText.Visibility == Visibility.Visible)
-                {
-                    Tools.Animations.FadeOut(WelcomeText, .5d, HideWelcomeText);
-                }
+                if (WelcomeText.Visibility == Visibility.Visible) Tools.Animations.FadeOut(WelcomeText, .5d, HideWelcomeText);
             }
         }
 
         // --------
 
-        private void AddStatementPanel(Point point, StatementType statementType)
+        private void AddStatementPanel(Point point, StatementType statementType, bool editConversation = true, Statement statement = null)
         {
-            GStatement statement = new GStatement(statementType);
-            statement.CreateConnectionItem.Click += CreateConnectionItem_Click;
+            GStatement gStatement = new GStatement(statementType, statement);
+            gStatement.CreateConnectionItem.Click += CreateConnectionItem_Click;
 
-            if (statementType == StatementType.Player) conversation.PlayerStatements.Add(statement.GetBoundProperty() as Statement);
-            else conversation.NPCStatements.Add(statement.GetBoundProperty() as Statement);
+            if (editConversation)
+            {
+                if (statementType == StatementType.Player) conversation.PlayerStatements.Add(gStatement.GetBoundProperty() as Statement);
+                else conversation.NPCStatements.Add(gStatement.GetBoundProperty() as Statement);
+            }
 
-            Panel.SetZIndex(statement, 10);
+            Panel.SetZIndex(gStatement, 10);
 
-            statement.MouseDown += Control_MouseDown;
-            statement.MouseDown += Control_Connection_MouseDown;
+            gStatement.MouseDown += Control_MouseDown;
+            gStatement.MouseDown += Control_Connection_MouseDown;
 
-            statement.MouseMove += Control_MouseMove;
-            statement.MouseUp += Control_MouseUp;
+            gStatement.MouseMove += Control_MouseMove;
+            gStatement.MouseUp += Control_MouseUp;
 
-            statement.Width = 250d;
-            statement.Height = 200d;
+            gStatement.Width = 250d;
+            gStatement.Height = 200d;
 
-            Canvas.SetTop(statement, point.Y);
-            Canvas.SetLeft(statement, point.X);
+            Canvas.SetTop(gStatement, point.Y);
+            Canvas.SetLeft(gStatement, point.X);
 
-            Workspace.Children.Add(statement);
-        }
-
-        private void AddConditionPanel(Point point)
-        {
-            GProperty property = new GProperty(PropertyType.Condition);
-
-            Panel.SetZIndex(property, 10);
-
-            property.MouseDown += Control_MouseDown;
-            property.MouseDown += Control_Connection_MouseDown;
-
-            property.MouseMove += Control_MouseMove;
-            property.MouseUp += Control_MouseUp;
-
-            property.Width = 250d;
-            property.Height = 275d;
-
-            Canvas.SetTop(property, point.Y);
-            Canvas.SetLeft(property, point.X);
-
-            Workspace.Children.Add(property);
+            Workspace.Children.Add(gStatement);
         }
 
         private void AddPropertyPanel(Point point, PropertyType type)
@@ -320,12 +303,28 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             selected = null;
         }
 
+        // ---- Test purposes only ----
+
+        private GCEPresentation presentation;
+
         private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
                 e.Handled = true;
                 MainWindow.Instance.DisplayFrame.Navigate(ConversationsPage.Instance);
+            }
+            else if (e.Key == Key.S)
+            {
+                e.Handled = true;
+                Console.WriteLine("Saving..");
+                Save();
+            }
+            else if (e.Key == Key.L)
+            {
+                e.Handled = true;
+                Console.WriteLine("Loading..");
+                Load(presentation);
             }
         }
 
@@ -334,6 +333,20 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
         private void HideWelcomeText(object sender, EventArgs e)
         {
             WelcomeText.Visibility = Visibility.Collapsed;
+        }
+
+        // -------- Saving and Loading --------
+
+        public void Save()
+        {
+            presentation = new GCEPresentation(this);
+        }
+
+        public void Load(GCEPresentation presentation)
+        {
+            Workspace.Children.Clear();
+
+            foreach (GSPresentation statement in presentation.Statements) AddStatementPanel(statement.PointPresentation.ToPoint(), statement.Type, false, statement.Statement);
         }
 
     }

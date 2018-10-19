@@ -149,6 +149,18 @@ namespace BetonQuest_Editor_Seasonal
                 control.BeginAnimation(FrameworkElement.HeightProperty, animation);
             }
 
+            public static void Slide(FrameworkElement element, double fromHeigt, double toHeight, double duration, EventHandler completed)
+            {
+                DoubleAnimation animation = new DoubleAnimation();
+                animation.From = fromHeigt;
+                animation.To = toHeight;
+                animation.Duration = TimeSpan.FromSeconds(duration);
+
+                if (completed != null) animation.Completed += completed;
+
+                element.BeginAnimation(FrameworkElement.HeightProperty, animation);
+            }
+
             public static void BackgroundColorAnimation(Panel control, Color to, double duration, bool autoReverse)
             {
                 SolidColorBrush brush = new SolidColorBrush();
@@ -262,7 +274,6 @@ namespace BetonQuest_Editor_Seasonal
 
             if (directoryInfo.GetFiles().Length == 0) directoryInfo.Delete();
         }
-
 
         public static bool ProjectImportPathFine(string directory)
         {

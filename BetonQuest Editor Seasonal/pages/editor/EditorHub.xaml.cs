@@ -40,13 +40,11 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
 
             NavigatorFrame.Content = new EditorStartPage();
 
-            NavigatorPanel.Height = 0d;
             AlertBar.Height = 0d;
-            NavigatorFrame.Opacity = 0d;
 
-            Tools.Animations.SlideDown(NavigatorPanel, 30d, .5d, FadeInFrame);
             CheckButton(Start);
 
+            // Will be moved to MainWindow!
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1d);
             timer.Tick += Timer_Tick;
@@ -61,7 +59,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
         }
 
         // ---- Alert System ----
-        // ---- Preparing to remove in full release
+        // ---- Preparing to move to MainWindow soon
 
         public void Alert(string text, AlertType type, int duration = 0)
         {  
@@ -153,13 +151,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             else AlertDuration--;
         }
 
-        // -------- Intro --------
-
-        private void FadeInFrame(object sender, EventArgs e)
-        {
-            Tools.Animations.FadeIn(NavigatorFrame, .25d, null);
-        }
-
         // -------- Menu Effects --------
 
         private void CheckButton(Button button)
@@ -204,23 +195,19 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
 
         private void NavigationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (lastClickedButton.Equals(sender))
-            {
-                return;
-            }
+            if (lastClickedButton.Equals(sender)) return;
 
-            if (lastClickedButton == null)
-            {
-                CheckButton((Button)sender);
-            }
+            Button button = sender as Button;
+
+            if (lastClickedButton == null) CheckButton(button);
             else
             {
                 UncheckButton(lastClickedButton);
-                CheckButton((Button)sender);
+                CheckButton(button);
             }
 
             Page page = null;
-            string name = ( (Button) sender ).Name;
+            string name =  button.Name;
             CallOffPriorityAlert();
 
             if (name.Equals("Start"))
@@ -255,16 +242,17 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             NavigatorFrame.Navigate(page);
         }
 
+        // -------- Toolbar --------
+        // ---- Will be moved to MainWindow soon
+
         private void SwitchToolbar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
             if (Toolbar.Height == 0d)
             {
                 Tools.Animations.SlideDown(Toolbar, 40d, .25d, null);
                 ToolbarPanel.Visibility = Visibility.Collapsed;
             }
             else Tools.Animations.SlideUp(Toolbar, 40d, .25d, ShowToolbarPanel);
-
         }
 
         private void ShowToolbarPanel(object sender, EventArgs e)
@@ -274,9 +262,11 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             Tools.Animations.FadeIn(ToolbarPanel, .25d, null);
         }
 
+        // ---- Needs upgrade
+        // ---- Tests only!
+
         private void UndoButton_Click(object sender, EventArgs e)
         {
-
             if (Project.QuestUndoOperations.Count == 0)
             {
                 Alert("No more UNDO operations!", AlertType.Error, 1);

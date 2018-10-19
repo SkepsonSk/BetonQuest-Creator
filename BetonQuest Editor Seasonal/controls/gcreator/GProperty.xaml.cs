@@ -107,7 +107,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
             Update();
 
-            Tools.Animations.FadeOut(PropertiesScrollViewer, .25d, Shorten);
+            Tools.Animations.FadeOut(PropertiesScrollViewer, .25d, null);
+            Tools.Animations.Slide(this, 250d, 190d, .25d, ChangeToPropertyDataDisplay);
         }
 
         private void Change_Click(object sender, RoutedEventArgs e)
@@ -126,7 +127,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             property = null;
             negated = false;
 
-            Tools.Animations.FadeOut(PropertiesDataBorder, .25d, Extend);
+            Tools.Animations.FadeOut(PropertiesDataBorder, .25d, null);
+            Tools.Animations.Slide(this, 190d, 250d, .25d, ChangeToPropertyChoosePanel);
         }
 
         private void Negation_Click(object sender, RoutedEventArgs e)
@@ -147,37 +149,11 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
         // ----
 
-        private void Shorten(object sender, EventArgs e)
-        {
-            PropertiesScrollViewer.Visibility = Visibility.Collapsed;
-
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = 250d;
-            animation.To = 190d;
-            animation.Duration = TimeSpan.FromSeconds(.25d);
-
-            animation.Completed += ChangeToPropertyDataDisplay;
-
-            BeginAnimation(HeightProperty, animation);
-        }
-
-        private void Extend(object sender, EventArgs e)
-        {
-            PropertiesDataBorder.Visibility = Visibility.Collapsed;
-
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = 190d;
-            animation.To = 250d;
-            animation.Duration = TimeSpan.FromSeconds(.25d);
-
-            animation.Completed += ChangeToPropertyChoosePanel;
-
-            BeginAnimation(HeightProperty, animation);
-        }
-
         private void ChangeToPropertyDataDisplay(object sender, EventArgs e)
         {
             PropertiesDataBorder.Opacity = 0;
+
+            PropertiesScrollViewer.Visibility = Visibility.Collapsed;
             PropertiesDataBorder.Visibility = Visibility.Visible;
 
             Tools.Animations.FadeIn(PropertiesDataBorder, .25d, null);
@@ -186,6 +162,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
         private void ChangeToPropertyChoosePanel(object sender, EventArgs e)
         {
             PropertiesScrollViewer.Opacity = 0;
+
+            PropertiesDataBorder.Visibility = Visibility.Collapsed;
             PropertiesScrollViewer.Visibility = Visibility.Visible;
 
             Tools.Animations.FadeIn(PropertiesScrollViewer, .25d, null);

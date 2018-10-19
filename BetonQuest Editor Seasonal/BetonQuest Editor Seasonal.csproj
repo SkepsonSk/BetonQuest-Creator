@@ -148,6 +148,10 @@
     <Compile Include="logic\gcreator\ArrowGenerator.cs" />
     <Compile Include="logic\gcreator\IPanel.cs" />
     <Compile Include="logic\gcreator\PanelConnection.cs" />
+    <Compile Include="logic\gcreator\presentation\GCEPresentation.cs" />
+    <Compile Include="logic\gcreator\presentation\GPPresentation.cs" />
+    <Compile Include="logic\gcreator\presentation\GSPresentation.cs" />
+    <Compile Include="logic\gcreator\presentation\PointPresentation.cs" />
     <Compile Include="logic\online\Project.cs" />
     <Compile Include="logic\online\ProjectUpload.cs" />
     <Compile Include="logic\online\Request.cs" />

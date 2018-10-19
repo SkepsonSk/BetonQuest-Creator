@@ -27,7 +27,7 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
         // -------- Start --------
 
-        public GStatement(StatementType statementType)
+        public GStatement(StatementType statementType, Statement statement = null)
         {
             InitializeComponent();
 
@@ -38,12 +38,18 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
             string id = Tools.GenerateID(8);
 
-            statement = new Statement(id);
+            if (statement == null) this.statement = new Statement(id);
+            else
+            {
+                this.statement = statement;
+
+                Content.Text = statement.Content;
+            }
 
             if (statementType == StatementType.Player) Title.Text = "Player Statement";
             else Title.Text = "NPC Statement";
 
-            ID.Text = id;
+            ID.Text = this.statement.ID;
         }
 
         // -------- Access --------
