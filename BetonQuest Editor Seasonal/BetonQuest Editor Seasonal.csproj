@@ -468,7 +468,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logic\pages\" />
-    <Folder Include="pages\gcreator\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="graphics\Discord.png" />

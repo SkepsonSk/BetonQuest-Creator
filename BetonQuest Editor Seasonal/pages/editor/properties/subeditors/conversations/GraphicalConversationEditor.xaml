@@ -9,7 +9,8 @@
       Background="{StaticResource Background}"
       MouseDown="Workspace_MouseDown"
       Title="GraphicalConversationEditor"
-      PreviewKeyDown="Page_PreviewKeyDown">
+      PreviewKeyDown="Page_PreviewKeyDown"
+      RenderOptions.BitmapScalingMode="NearestNeighbor">
 
     <Grid>
 
@@ -22,20 +23,22 @@
             
         </Grid>
 
-        
         <ScrollViewer Name="ScrollViewer" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1" PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp" PreviewMouseMove="ScrollViewer_PreviewMouseMove">
 
-            <Canvas Name="Workspace" Height="10000" Width="10000" MouseDown="Control_MouseDown">
+            <Canvas Name="Workspace" Height="10000" Width="10000" MouseDown="Control_MouseDown" MouseWheel="Workspace_MouseWheel">
 
+                <Canvas.RenderTransform>
+                    <ScaleTransform x:Name="ScalingUnit" ScaleX="1" ScaleY="1"/>
+                </Canvas.RenderTransform>
+                
                 <Canvas.Background>
-                    <VisualBrush TileMode="Tile"
-                Viewport="0,0,50,50" ViewportUnits="Absolute" 
-                Viewbox="0,0,50,50" ViewboxUnits="Absolute">
+                    
+                    <VisualBrush TileMode="Tile"  Viewport="0,0,25,25" ViewportUnits="Absolute" Viewbox="0,0,25,25" ViewboxUnits="Absolute">
                         <VisualBrush.Visual>
-                            <Rectangle Stroke="Darkgray" StrokeThickness="0.25" Height="50" Width="50"
-                />
+                            <Rectangle Stroke="Darkgray" StrokeThickness="0.2" Height="25" Width="25"/>
                         </VisualBrush.Visual>
                     </VisualBrush>
+                    
                 </Canvas.Background>
 
                 <Canvas.ContextMenu>

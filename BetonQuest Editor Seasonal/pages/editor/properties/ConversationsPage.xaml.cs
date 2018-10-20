@@ -197,14 +197,13 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties
 
         private void SpecialButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("ADAD");
-
             Button specialButton = sender as Button;
             View view = specialButton.Tag as View;
             Conversation conversation = view.Data[0] as Conversation;
 
             if (conversation.GraphicalConversationEditor == null) return;
 
+            conversation.GraphicalConversationEditor.InvokeWorkspace();
             MainWindow.Instance.DisplayFrame.Navigate(conversation.GraphicalConversationEditor);
         }
 

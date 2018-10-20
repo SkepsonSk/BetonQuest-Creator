@@ -38,6 +38,9 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
             string id = Tools.GenerateID(8);
 
+            Width = 250d;
+            Height = 200d;
+
             if (statement == null) this.statement = new Statement(id);
             else
             {
@@ -50,6 +53,7 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             else Title.Text = "NPC Statement";
 
             ID.Text = this.statement.ID;
+
         }
 
         // -------- Access --------
@@ -68,6 +72,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
         {
             statement = property as Statement;
         }
+
+        // ----
 
         public StatementType StatementType {
             get {

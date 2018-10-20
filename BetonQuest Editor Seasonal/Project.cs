@@ -34,8 +34,6 @@ namespace BetonQuest_Editor_Seasonal
         public static string LastEditedProjectName;
         public static string LastEditedProjectPath;
 
-        public static Dictionary<Conversation, GraphicalConversationEditor> loadedGraphicalConversationEditors = new Dictionary<Conversation, GraphicalConversationEditor>();
-
         public static UpdateManager UpdateManager;
 
         // -------- File System --------
@@ -49,6 +47,7 @@ namespace BetonQuest_Editor_Seasonal
 
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             if (!Directory.Exists(path + @"\enchants")) Directory.CreateDirectory(path + @"\enchants");
+            if (!Directory.Exists(path + @"\gce")) Directory.CreateDirectory(path + @"\gce");
             if (!Directory.Exists(path + @"\projects")) Directory.CreateDirectory(path + @"\projects");
             if (!Directory.Exists(path + @"\definitions")) Directory.CreateDirectory(path + @"\definitions");
             if (!Directory.Exists(path + @"\temp")) Directory.CreateDirectory(path + @"\temp");

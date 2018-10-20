@@ -64,6 +64,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             PanelConnection.SetWorkspace(Workspace);
         }
 
+        public void InvokeWorkspace() { PanelConnection.SetWorkspace(Workspace); }
+
         private void Workspace_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
@@ -95,9 +97,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             gStatement.MouseMove += Control_MouseMove;
             gStatement.MouseUp += Control_MouseUp;
 
-            gStatement.Width = 250d;
-            gStatement.Height = 200d;
-
             Canvas.SetTop(gStatement, point.Y);
             Canvas.SetLeft(gStatement, point.X);
 
@@ -120,6 +119,31 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             Canvas.SetLeft(gProperty, point.X);
 
             Workspace.Children.Add(gProperty);
+        }
+
+        // -------- Scaling the workspace --------
+
+        private void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+
+            if (e.Delta < 0 )
+            {
+                ScalingUnit.ScaleX += 0.01d;
+                ScalingUnit.ScaleY += 0.01d;
+
+                ScrollViewer.ScrollToVerticalOffset(ScrollViewer.ContentVerticalOffset + 50);
+                ScrollViewer.ScrollToHorizontalOffset(ScrollViewer.ContentHorizontalOffset + 50);
+            }
+            else
+            {
+                ScalingUnit.ScaleX -= 0.01d;
+                ScalingUnit.ScaleY -= 0.01d;
+
+                ScrollViewer.ScrollToVerticalOffset(ScrollViewer.ContentVerticalOffset - 50);
+                ScrollViewer.ScrollToHorizontalOffset(ScrollViewer.ContentHorizontalOffset - 50);
+            }
+
         }
 
         // -------- Moving --------
@@ -306,9 +330,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
         private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
-
-            if (e.Key == Key.Escape) MainWindow.Instance.DisplayFrame.Navigate(ConversationsPage.Instance);
+            if (e.Key == Key.Escape) MainWindow.Instance.Navigate(ConversationsPage.Instance);
             else if (e.Key == Key.S) presentation = new GCEPresentation(this);
             else if (e.Key == Key.L) LoadPresentation(presentation);
         }

@@ -56,7 +56,6 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
                 }
                 else if (element is GProperty)
                 {
-
                     GProperty gProperty = element as GProperty;
                     GPPresentation property = new GPPresentation(gProperty);
 
