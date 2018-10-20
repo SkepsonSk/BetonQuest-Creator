@@ -40,8 +40,10 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
 
         public void CreateArrow()
         {
-            Point firstPoint = first.TranslatePoint(new Point(0, 0), workspace);
-            Point secondPoint = second.TranslatePoint(new Point(0, 0), workspace);
+            Point firstPoint = new Point(Canvas.GetLeft(first), Canvas.GetTop(first));
+            Point secondPoint = new Point(Canvas.GetLeft(second), Canvas.GetTop(second));
+
+            Console.WriteLine(firstPoint.X + " " + firstPoint.Y + " / " + secondPoint.X + " " + secondPoint.Y);
 
             firstPoint.X += first.Width / 2;
             firstPoint.Y += first.Height / 2;
@@ -64,8 +66,8 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
             line.Stroke = Brushes.Gray;
             line.StrokeThickness = 2d;
 
-            Point firstPoint = first.TranslatePoint(new Point(0, 0), workspace);
-            Point secondPoint = second.TranslatePoint(new Point(0, 0), workspace);
+            Point firstPoint = new Point(Canvas.GetLeft(first), Canvas.GetTop(first));
+            Point secondPoint = new Point(Canvas.GetLeft(second), Canvas.GetTop(second));
 
             line.X1 = firstPoint.X + first.Width / 2;
             line.X2 = secondPoint.X + second.Width / 2;
@@ -73,8 +75,6 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
             line.Y2 = secondPoint.Y + second.Height / 2;
 
             Panel.SetZIndex(line, 0);
-
-            Console.WriteLine("Generated!");
 
             workspace.Children.Add(line);
         }

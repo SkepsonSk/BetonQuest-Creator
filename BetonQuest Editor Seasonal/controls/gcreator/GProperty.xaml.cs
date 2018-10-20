@@ -40,54 +40,24 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             this.property = property;
             this.type = type;
 
+            Width = 250d;
+
             if (property == null)
             {
-                Height += 250d;
+                Height = 275d;
 
-                Title.Foreground = Brushes.White;
-                TitleSeparator.Background = Brushes.White;
-                PropertyName.Foreground = Brushes.White;
-                PropertyContent.Foreground = Brushes.White;
+                Prepare();
+                LoadChoosingPanel();
+            }
+            else
+            {
+                Prepare();
+                Update();
 
-                if (type == PropertyType.Condition)
-                {
-                    Title.Text = "CONDITION";
+                PropertiesScrollViewer.Visibility = Visibility.Collapsed;
+                PropertiesDataBorder.Visibility = Visibility.Visible;
 
-                    negated = false;
-
-                    Body.Background = new SolidColorBrush( Color.FromRgb(255, 173, 51) );
-                    PropertiesDataBorder.Background = new SolidColorBrush( Color.FromRgb(255, 153, 0) );
-
-                    foreach (Property propertyData in Project.Quest.Conditions)
-                    {
-                        View view = new View(propertyData.ID, new object[] { propertyData }, true, false);
-                        view.MouseDown += View_MouseDown;
-                        view.SetHeadFontSize(16d);
-                        view.Margin = new Thickness(0d, 0d, 0d, 2.5d);
-                       
-                        Properties.Children.Add(view);
-                    }
-                }
-                else if (type == PropertyType.Event)
-                {
-                    Title.Text = "EVENT";;
-
-                    Negation.Visibility = Visibility.Collapsed;
-
-                    Body.Background = new SolidColorBrush(Color.FromRgb(0, 153, 0));
-                    PropertiesDataBorder.Background = new SolidColorBrush(Color.FromRgb(0, 179, 0));
-
-                    foreach (Property propertyData in Project.Quest.Events)
-                    {
-                        View view = new View(propertyData.ID, new object[] { propertyData }, true, false);
-                        view.MouseDown += View_MouseDown;
-                        view.SetHeadFontSize(16d);
-                        view.Margin = new Thickness(0d, 0d, 0d, 2.5d);
-
-                        Properties.Children.Add(view);
-                    }
-                }
-
+                Height = 190d;
             }
 
         }
@@ -161,6 +131,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
         private void ChangeToPropertyChoosePanel(object sender, EventArgs e)
         {
+            if (Properties.Children.Count == 0) LoadChoosingPanel();
+
             PropertiesScrollViewer.Opacity = 0;
 
             PropertiesDataBorder.Visibility = Visibility.Collapsed;
@@ -170,6 +142,50 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
         }
 
         // -------- Access --------
+
+        public void Prepare()
+        {
+            Title.Foreground = Brushes.White;
+            TitleSeparator.Background = Brushes.White;
+            PropertyName.Foreground = Brushes.White;
+            PropertyContent.Foreground = Brushes.White;
+
+            if (type == PropertyType.Condition)
+            {
+                Title.Text = "CONDITION";
+                negated = false;
+
+                Body.Background = new SolidColorBrush(Color.FromRgb(255, 173, 51));
+                PropertiesDataBorder.Background = new SolidColorBrush(Color.FromRgb(255, 153, 0));
+            }
+            else if (type == PropertyType.Event)
+            {
+                Title.Text = "EVENT"; ;
+
+                Negation.Visibility = Visibility.Collapsed;
+
+                Body.Background = new SolidColorBrush(Color.FromRgb(0, 153, 0));
+                PropertiesDataBorder.Background = new SolidColorBrush(Color.FromRgb(0, 179, 0));
+            }
+        }
+
+        public void LoadChoosingPanel()
+        {
+            List<Property> properties = null;
+
+            if (type == PropertyType.Condition) properties = Project.Quest.Conditions;
+            else if (type == PropertyType.Event) properties = Project.Quest.Events;
+
+            foreach (Property propertyData in properties)
+            {
+                View view = new View(propertyData.ID, new object[] { propertyData }, true, false);
+                view.MouseDown += View_MouseDown;
+                view.SetHeadFontSize(16d);
+                view.Margin = new Thickness(0d, 0d, 0d, 2.5d);
+
+                Properties.Children.Add(view);
+            }
+        }
 
         public void Update()
         {

@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 {
-    public class GSPresentation
+    [Serializable]
+    public class GSPresentation : PanelPresentation
     {
         public GSPresentation(GStatement statement)
         {
@@ -21,7 +22,5 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 
         public Statement Statement { get; }
         public StatementType Type { get; }
-
-        public PointPresentation PointPresentation { get; set; }
     }
 }

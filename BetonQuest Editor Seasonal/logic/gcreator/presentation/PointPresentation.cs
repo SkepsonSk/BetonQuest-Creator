@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 {
+    [Serializable]
     public class PointPresentation
     {
         public PointPresentation(double x, double y)

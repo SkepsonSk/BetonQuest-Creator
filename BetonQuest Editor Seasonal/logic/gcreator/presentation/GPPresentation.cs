@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BetonQuest_Editor_Seasonal.controls.gcreator;
+using BetonQuest_Editor_Seasonal.logic.structure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,20 @@ using System.Threading.Tasks;
 
 namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 {
-    public class GPPresentation
+    [Serializable]
+    public class GPPresentation : PanelPresentation
     {
+
+        public Property Property { get; }
+        public PropertyType PropertyType { get; }
+
+        // -------- Start --------
+
+        public GPPresentation(GProperty property)
+        {
+            Property = property.GetBoundProperty() as Property;
+            PropertyType = property.Type;
+        }
+
     }
 }

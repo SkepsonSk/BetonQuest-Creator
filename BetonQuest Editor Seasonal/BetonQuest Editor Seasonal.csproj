@@ -151,6 +151,8 @@
     <Compile Include="logic\gcreator\presentation\GCEPresentation.cs" />
     <Compile Include="logic\gcreator\presentation\GPPresentation.cs" />
     <Compile Include="logic\gcreator\presentation\GSPresentation.cs" />
+    <Compile Include="logic\gcreator\presentation\PanelConnectionPresentation.cs" />
+    <Compile Include="logic\gcreator\presentation\PanelPresentation.cs" />
     <Compile Include="logic\gcreator\presentation\PointPresentation.cs" />
     <Compile Include="logic\online\Project.cs" />
     <Compile Include="logic\online\ProjectUpload.cs" />

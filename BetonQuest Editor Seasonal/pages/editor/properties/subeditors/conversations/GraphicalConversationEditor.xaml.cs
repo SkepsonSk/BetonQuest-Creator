@@ -104,25 +104,22 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             Workspace.Children.Add(gStatement);
         }
 
-        private void AddPropertyPanel(Point point, PropertyType type)
+        private void AddPropertyPanel(Point point, PropertyType type, Property property = null)
         {
-            GProperty property = new GProperty(type);
+            GProperty gProperty = new GProperty(type, property);
 
-            Panel.SetZIndex(property, 10);
+            Panel.SetZIndex(gProperty, 10);
 
-            property.MouseDown += Control_MouseDown;
-            property.MouseDown += Control_Connection_MouseDown;
+            gProperty.MouseDown += Control_MouseDown;
+            gProperty.MouseDown += Control_Connection_MouseDown;
 
-            property.MouseMove += Control_MouseMove;
-            property.MouseUp += Control_MouseUp;
+            gProperty.MouseMove += Control_MouseMove;
+            gProperty.MouseUp += Control_MouseUp;
 
-            property.Width = 250d;
-            property.Height = 275d;
+            Canvas.SetTop(gProperty, point.Y);
+            Canvas.SetLeft(gProperty, point.X);
 
-            Canvas.SetTop(property, point.Y);
-            Canvas.SetLeft(property, point.X);
-
-            Workspace.Children.Add(property);
+            Workspace.Children.Add(gProperty);
         }
 
         // -------- Moving --------
@@ -309,23 +306,11 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
         private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                e.Handled = true;
-                MainWindow.Instance.DisplayFrame.Navigate(ConversationsPage.Instance);
-            }
-            else if (e.Key == Key.S)
-            {
-                e.Handled = true;
-                Console.WriteLine("Saving..");
-                Save();
-            }
-            else if (e.Key == Key.L)
-            {
-                e.Handled = true;
-                Console.WriteLine("Loading..");
-                Load(presentation);
-            }
+            e.Handled = true;
+
+            if (e.Key == Key.Escape) MainWindow.Instance.DisplayFrame.Navigate(ConversationsPage.Instance);
+            else if (e.Key == Key.S) presentation = new GCEPresentation(this);
+            else if (e.Key == Key.L) LoadPresentation(presentation);
         }
 
         // --------
@@ -335,18 +320,45 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             WelcomeText.Visibility = Visibility.Collapsed;
         }
 
-        // -------- Saving and Loading --------
+        // -------- 
 
-        public void Save()
-        {
-            presentation = new GCEPresentation(this);
-        }
-
-        public void Load(GCEPresentation presentation)
+        public void LoadPresentation(GCEPresentation presentation)
         {
             Workspace.Children.Clear();
 
             foreach (GSPresentation statement in presentation.Statements) AddStatementPanel(statement.PointPresentation.ToPoint(), statement.Type, false, statement.Statement);
+            foreach (GPPresentation property in presentation.Properties) AddPropertyPanel(property.PointPresentation.ToPoint(), property.PropertyType, property.Property);
+
+            foreach (GSPresentation statementPresentation in presentation.Statements)
+            {
+                List<PanelConnectionPresentation> connectionPresentations = presentation.GetConnections(statementPresentation);
+
+                if (connectionPresentations.Count == 0) continue;
+
+                GStatement gStatement = presentation.GetGStatement(statementPresentation);
+
+                foreach (PanelConnectionPresentation connectionPresentation in connectionPresentations)
+                {
+                    Control connected = null;
+                    PanelConnection connection = null;
+
+                    if (connectionPresentation.Second is GSPresentation)
+                    {
+                        connected = presentation.GetGStatement(connectionPresentation.Second as GSPresentation);
+                        connection = new PanelConnection(gStatement, connected, true);
+                    }
+                    else if (connectionPresentation.Second is GPPresentation)
+                    {
+                        connected = presentation.GetGProperty(connectionPresentation.Second as GPPresentation);
+                        connection = new PanelConnection(gStatement, connected, false);
+                    }
+     
+                    gStatement.GetPanelConnections().Add(connection);
+                    (connected as IPanel).GetPanelConnections().Add(connection);
+                }
+
+            }
+
         }
 
     }

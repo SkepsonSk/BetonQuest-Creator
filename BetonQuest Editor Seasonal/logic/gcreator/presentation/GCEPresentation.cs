@@ -10,48 +10,158 @@ using System.Windows.Controls;
 
 namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 {
+    [Serializable]
     public class GCEPresentation
     {
         private static GraphicalConversationEditor graphicalConversationEditor;
+        private static Canvas workspace;
 
         // ----
 
-        private List<GPPresentation> properties;
+        public List<GSPresentation> Statements { get; }
+        public List<GPPresentation> Properties { get; }
+
+        public List<PanelConnectionPresentation> PanelConnections { get; }
 
         // -------- Start --------
 
         public GCEPresentation(GraphicalConversationEditor graphicalConversationEditor)
         {
             GCEPresentation.graphicalConversationEditor = graphicalConversationEditor;
+            workspace = graphicalConversationEditor.Workspace;
 
             Statements = new List<GSPresentation>();
-            properties = new List<GPPresentation>();
+            Properties = new List<GPPresentation>();
 
-            HookStatements();
+            PanelConnections = new List<PanelConnectionPresentation>();
+
+            HookProperties();
+            HookConnections();
         }
 
         // -------- Access --------
 
-        public List<GSPresentation> Statements { get;  }
+        private void HookProperties()
+        {   
+            foreach (UIElement element in workspace.Children)
+            {
+                if (element is GStatement)
+                {
+                    GStatement gStatement = element as GStatement;
 
-        // ----
+                    GSPresentation statement = new GSPresentation(gStatement);
+                    statement.PointPresentation = new PointPresentation( Canvas.GetLeft(element as GStatement), Canvas.GetTop(element as GStatement) );
 
-        private void HookStatements()
+                    Statements.Add(statement);
+                }
+                else if (element is GProperty)
+                {
+
+                    GProperty gProperty = element as GProperty;
+                    GPPresentation property = new GPPresentation(gProperty);
+
+                    property.PointPresentation = new PointPresentation(Canvas.GetLeft(element as GProperty), Canvas.GetTop(element as GProperty));
+
+                    Properties.Add(property);
+                }
+            }
+        }
+
+        private void HookConnections()
         {
-            Canvas workspace = graphicalConversationEditor.Workspace;
+            PanelConnections.Clear();
 
             foreach (UIElement element in workspace.Children)
             {
 
                 if (element is GStatement)
                 {
-                    GSPresentation statement = new GSPresentation(element as GStatement);
-                    statement.PointPresentation = new PointPresentation( Canvas.GetLeft(element as GStatement), Canvas.GetTop(element as GStatement) );
+                    GStatement gStatement = element as GStatement;
+                    GSPresentation statementPresentation = GetStatementPresentation(gStatement);
 
-                    Statements.Add(statement);
+                    foreach (PanelConnection panelConnection in gStatement.GetPanelConnections())
+                    {
+                        if (panelConnection.Second is GStatement) PanelConnections.Add(new PanelConnectionPresentation(statementPresentation, GetStatementPresentation(panelConnection.Second as GStatement)));
+                        else if (panelConnection.Second is GProperty) PanelConnections.Add(new PanelConnectionPresentation(statementPresentation, GetPropertyPresentation(panelConnection.Second as GProperty)));
+                    }
+
                 }
 
             }
         }
+        
+        // ----
+
+        public List<PanelConnectionPresentation> GetConnections(PanelPresentation panelPresentation)
+        {
+
+            List<PanelConnectionPresentation> connections = new List<PanelConnectionPresentation>();
+
+            foreach (PanelConnectionPresentation connectionPresentation in PanelConnections)
+            {
+                if (connectionPresentation.First.Equals(panelPresentation)) connections.Add(connectionPresentation);
+            }
+
+            return connections;
+        }
+
+        public GSPresentation GetStatementPresentation(GStatement gStatement)
+        {
+            double gStatementX = Canvas.GetLeft(gStatement);
+            double gStatementY = Canvas.GetTop(gStatement);
+
+            foreach (GSPresentation presentation in Statements)
+            {
+                if (presentation.PointPresentation.X == gStatementX && presentation.PointPresentation.Y == gStatementY) return presentation;
+            }
+
+            return null;
+        }
+
+        public GPPresentation GetPropertyPresentation(GProperty gProperty)
+        {
+            double gPropertyX = Canvas.GetLeft(gProperty);
+            double gPropertyY = Canvas.GetTop(gProperty);
+
+            foreach (GPPresentation presentation in Properties)
+            {
+                if (presentation.PointPresentation.X == gPropertyX && presentation.PointPresentation.Y == gPropertyY) return presentation;
+            }
+
+            return null;
+        }
+
+        public GStatement GetGStatement(GSPresentation statementPresentation)
+        {
+            double statementPresentationX = statementPresentation.PointPresentation.X;
+            double statementPresentationY = statementPresentation.PointPresentation.Y;
+
+            foreach (UIElement element in workspace.Children)
+            {
+                if (element is GStatement)
+                {
+                    if (Canvas.GetLeft(element) == statementPresentationX && Canvas.GetTop(element) == statementPresentationY) return element as GStatement;
+                }
+            }
+
+            return null;
+        }
+
+        public GProperty GetGProperty(GPPresentation propertyPresentation)
+        {
+            double propertyPresentationX = propertyPresentation.PointPresentation.X;
+            double propertyPresentationY = propertyPresentation.PointPresentation.Y;
+
+            foreach (UIElement element in workspace.Children)
+            {
+                if (element is GProperty)
+                {
+                    if (Canvas.GetLeft(element) == propertyPresentationX && Canvas.GetTop(element) == propertyPresentationY) return element as GProperty;
+                }
+            }
+
+            return null;
+        }
+
     }
 }
