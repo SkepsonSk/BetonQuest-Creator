@@ -9,8 +9,6 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
 {
     public interface IPanel
     {
-        List<PanelConnection> GetPanelConnections();
-
         Property GetBoundProperty();
         void BindProperty(Property property);
     }

@@ -100,6 +100,14 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
             }
         }
 
+        // -------- Deleting --------
+
+        public void Delete()
+        {
+            if (arrowLine != null) workspace.Children.Remove(arrowLine);
+            else if (line != null) workspace.Children.Remove(line);
+        }
+
         // -------- Access --------
 
         public Control First {

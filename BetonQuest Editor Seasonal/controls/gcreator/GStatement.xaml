@@ -12,10 +12,10 @@
 
             <MenuItem Header="Connection">
                 <MenuItem Name="CreateConnectionItem" Header="Create"/>
-                <MenuItem Header="Break"/>
+                <MenuItem Name="BreakConnectionItem" Header="Break"/>
             </MenuItem>
 
-            <MenuItem Header="Delete"/>
+            <MenuItem Name="DeleteItem" Header="Delete"/>
 
         </ContextMenu>
     </UserControl.ContextMenu>

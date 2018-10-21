@@ -41,6 +41,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
         private bool creatingConnection = false;
         private GStatement selected;
 
+        public List<PanelConnection> Connections { get; }
+
         // ---- Data ----
 
         private Conversation conversation;
@@ -53,7 +55,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
             if (conversation == null)
             {
-                this.conversation = new Conversation("test", 1806);
+                this.conversation = new Conversation("test", 1906);
                 Project.Quest.Conversations.Add(conversation);
             }
             else this.conversation = conversation;
@@ -62,7 +64,10 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             ScrollViewer.ScrollToHorizontalOffset( Workspace.Width / 2 );
 
             PanelConnection.SetWorkspace(Workspace);
+            Connections = new List<PanelConnection>();
         }
+
+        // ----
 
         public void InvokeWorkspace() { PanelConnection.SetWorkspace(Workspace); }
 
@@ -82,6 +87,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
         {
             GStatement gStatement = new GStatement(statementType, statement);
             gStatement.CreateConnectionItem.Click += CreateConnectionItem_Click;
+
+            gStatement.DeleteItem.Click += DeleteItem_Click;
 
             if (editConversation)
             {
@@ -108,6 +115,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             GProperty gProperty = new GProperty(type, property);
 
             Panel.SetZIndex(gProperty, 10);
+
+            gProperty.DeleteItem.Click += DeleteItem_Click;
 
             gProperty.MouseDown += Control_MouseDown;
             gProperty.MouseDown += Control_Connection_MouseDown;
@@ -175,10 +184,15 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             double CanvasTop = newY - offset.Y;
             double CanvasLeft = newX - offset.X;
 
-            if (movedControl is IPanel)
+            foreach (PanelConnection connection in Connections)
+            {
+                if (connection.First.Equals(movedControl) || connection.Second.Equals(movedControl)) connection.Update();
+            }
+
+           /* if (movedControl is IPanel)
             {
                 foreach (PanelConnection panelConnection in (movedControl as IPanel).GetPanelConnections()) panelConnection.Update();
-            }
+            }*/
 
             movedControl.SetValue(Canvas.TopProperty, CanvasTop);
             movedControl.SetValue(Canvas.LeftProperty, CanvasLeft);
@@ -257,8 +271,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             }
 
             selected = ((MenuItem)sender).Tag as GStatement;
-
-            Console.WriteLine("Creating connection...");
         }
 
         private void Control_Connection_MouseDown(object sender, MouseButtonEventArgs e)
@@ -317,11 +329,52 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
             }
 
-            (selected as IPanel).GetPanelConnections().Add(panelConnection);
-            (connecting as IPanel).GetPanelConnections().Add(panelConnection);
+            Connections.Add(panelConnection);
+
+            //(selected as IPanel).GetPanelConnections().Add(panelConnection);
+            //(connecting as IPanel).GetPanelConnections().Add(panelConnection);
 
             creatingConnection = false;
             selected = null;
+        }
+
+        // -------- Deleting and Breaking Connections --------
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            IPanel iPanel = (sender as MenuItem).Tag as IPanel;
+
+            bool removedIsStatement = iPanel is GStatement;
+
+            GProperty gProperty = null;
+            if (!removedIsStatement)
+            {
+                gProperty = iPanel as GProperty;
+            }
+
+            for (int n = Connections.Count - 1; n >= 0; n--)
+            {
+                if (gProperty.Type == PropertyType.Condition)
+                {
+                    ((Connections[n].First as GStatement).GetBoundProperty() as Statement).Conditions.Remove(gProperty.GetBoundProperty());
+                    ((Connections[n].First as GStatement).GetBoundProperty() as Statement).NegatedConditions.Remove(gProperty.GetBoundProperty().ID);
+                }
+                else ((Connections[n].First as GStatement).GetBoundProperty() as Statement).Events.Remove(gProperty.GetBoundProperty());
+
+                if (Connections[n].First.Equals(iPanel) || Connections[n].Second.Equals(iPanel))
+                {
+                    Connections[n].Delete();
+                    Connections.RemoveAt(n);
+                }
+            }
+
+            if (removedIsStatement)
+            {
+                conversation.BreakConnectionsWithStatement((iPanel.GetBoundProperty() as Statement));
+                conversation.RemoveStatement(iPanel.GetBoundProperty() as Statement);
+            }
+
+            Workspace.Children.Remove(iPanel as Control);
         }
 
         // ---- Test purposes only ----
@@ -347,11 +400,20 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
         public void LoadPresentation(GCEPresentation presentation)
         {
             Workspace.Children.Clear();
+            Connections.Clear();
 
             foreach (GSPresentation statement in presentation.Statements) AddStatementPanel(statement.PointPresentation.ToPoint(), statement.Type, false, statement.Statement);
             foreach (GPPresentation property in presentation.Properties) AddPropertyPanel(property.PointPresentation.ToPoint(), property.PropertyType, property.Property);
 
-            foreach (GSPresentation statementPresentation in presentation.Statements)
+            foreach (PanelConnectionPresentation connection in presentation.PanelConnections)
+            {
+                GStatement first = presentation.GetGStatement(connection.First as GSPresentation);
+
+                if (connection.Second is GSPresentation) Connections.Add(new PanelConnection(first, presentation.GetGStatement(connection.Second as GSPresentation), true));
+                else Connections.Add(new PanelConnection(first, presentation.GetGProperty(connection.Second as GPPresentation)));
+            }
+
+            /*foreach (GSPresentation statementPresentation in presentation.Statements)
             {
                 List<PanelConnectionPresentation> connectionPresentations = presentation.GetConnections(statementPresentation);
 
@@ -376,10 +438,10 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
                     }
      
                     gStatement.GetPanelConnections().Add(connection);
-                    (connected as IPanel).GetPanelConnections().Add(connection);
+                   //(connected as IPanel).GetPanelConnections().Add(connection);
                 }
 
-            }
+            }*/
 
         }
 

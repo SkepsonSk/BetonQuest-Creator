@@ -194,5 +194,44 @@ namespace BetonQuest_Editor_Seasonal.logic.structure.conversating
             return null;
         }
 
+        public void RemoveStatement(Statement statement)
+        {
+            for (int n = NPCStatements.Count - 1; n >= 0; n--)
+            {
+                if (NPCStatements[n].Equals(statement)) NPCStatements.RemoveAt(n);
+            }
+            for (int n = PlayerStatements.Count - 1; n >= 0; n--)
+            {
+                if (PlayerStatements[n].Equals(statement)) PlayerStatements.RemoveAt(n);
+            }
+        }
+
+        public void ResetStatement(Statement statement)
+        {
+            statement.Conditions.Clear();
+            statement.NegatedConditions.Clear();
+            statement.Events.Clear();
+        }
+
+        public void BreakConnectionsWithStatement(Statement statement)
+        {
+            if (NPCStatements.Contains(statement))
+            {
+                foreach (Statement npcStatement in NPCStatements)
+                {
+                    if (npcStatement.NextStatements.Contains(statement)) npcStatement.NextStatements.Remove(statement);
+                }
+            }
+            else
+            {
+                foreach (Statement playerStatement in PlayerStatements)
+                {
+                    if (playerStatement.NextStatements.Contains(statement)) playerStatement.NextStatements.Remove(statement);
+                }
+            }
+
+            statement.NextStatements.Clear();
+        }
+
     }
 }

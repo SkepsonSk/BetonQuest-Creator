@@ -34,6 +34,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             this.statementType = statementType;
 
             CreateConnectionItem.Tag = this;
+            DeleteItem.Tag = this;
+
             panelConnections = new List<PanelConnection>();
 
             string id = Tools.GenerateID(8);
@@ -53,7 +55,6 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             else Title.Text = "NPC Statement";
 
             ID.Text = this.statement.ID;
-
         }
 
         // -------- Access --------

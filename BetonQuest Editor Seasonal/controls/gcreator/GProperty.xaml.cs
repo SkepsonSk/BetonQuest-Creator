@@ -37,6 +37,8 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
             panelConnections = new List<PanelConnection>();
 
+            DeleteItem.Tag = this;
+
             this.property = property;
             this.type = type;
 

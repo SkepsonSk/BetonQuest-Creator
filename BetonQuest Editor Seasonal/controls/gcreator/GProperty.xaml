@@ -11,7 +11,7 @@
         <ContextMenu>
             <MenuItem Header="Change" Click="Change_Click"/>
             <MenuItem Name="Negation" Header="Negate" Click="Negation_Click"/>
-            <MenuItem Header="Delete"/>
+            <MenuItem Name="DeleteItem" Header="Delete"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     

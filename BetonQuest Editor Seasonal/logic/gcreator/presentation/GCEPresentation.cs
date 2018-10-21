@@ -70,7 +70,16 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
         {
             PanelConnections.Clear();
 
-            foreach (UIElement element in workspace.Children)
+            foreach (PanelConnection connection in graphicalConversationEditor.Connections)
+            {
+                GSPresentation firstStatement = GetStatementPresentation(connection.First as GStatement);
+
+                if (connection.Second is GStatement) PanelConnections.Add(new PanelConnectionPresentation(firstStatement, GetStatementPresentation(connection.Second as GStatement)));
+                else PanelConnections.Add(new PanelConnectionPresentation(firstStatement, GetPropertyPresentation(connection.Second as GProperty)));
+
+            }
+
+            /*foreach (UIElement element in workspace.Children)
             {
 
                 if (element is GStatement)
@@ -86,7 +95,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 
                 }
 
-            }
+            }*/
         }
         
         // ----
