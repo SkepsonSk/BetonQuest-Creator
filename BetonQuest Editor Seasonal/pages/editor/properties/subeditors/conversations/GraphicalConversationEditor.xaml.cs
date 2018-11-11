@@ -82,6 +82,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             ScrollViewer.ScrollToHorizontalOffset(Workspace.Width / 2);
 
             WelcomeText.Visibility = Visibility.Collapsed;
+
+            UpdateStartStatementsSequence();
         }
 
         // ----
@@ -96,6 +98,16 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
                 if (WelcomeText.Visibility == Visibility.Visible) Tools.Animations.FadeOut(WelcomeText, .5d, HideWelcomeText);
             }
+        }
+
+        // -------- Property Dynamic Creator --------
+
+        public void ShowPropertyDynamicCreator(PropertyType type)
+        {
+            Tools.Animations.SlideRight(PropertyDynamicCreator, 275d, .25d, null);
+
+            if (type == PropertyType.Event) PropertyDynamicCreatorTitle.Text = "New EVENT";
+            else if (type == PropertyType.Condition) PropertyDynamicCreatorTitle.Text = "New CONDITION";
         }
 
         // --------
@@ -140,6 +152,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
                     gStatement.Border.BorderBrush = Brushes.Orange;
 
                     gStatement.StartItem.Header = "Remove from start statements";
+                    gStatement.StartPosition.Visibility = Visibility.Visible;
                 }
             }
 
@@ -163,6 +176,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
             Panel.SetZIndex(gProperty, 10);
 
+            gProperty.New.MouseDown += PropertyAdd_MouseDown;
+
             gProperty.DeleteItem.Click += DeleteItem_Click;
 
             gProperty.MouseDown += Control_MouseDown;
@@ -175,6 +190,19 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             Canvas.SetLeft(gProperty, point.X);
 
             Workspace.Children.Add(gProperty);
+        }
+
+        // --------
+
+        private void PropertyAdd_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PropertyType type = ((sender as TextBlock).Tag as GProperty).Type;
+            ShowPropertyDynamicCreator(type);
+        }
+
+        private void PropertyAddClose_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tools.Animations.SlideLeft(PropertyDynamicCreator, 275d, .25d, null);
         }
 
         // -------- Scaling the workspace --------
@@ -332,7 +360,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             if (connecting is GStatement)
             {
                 GStatement connectingGStatement = connecting as GStatement;
-                panelConnection = new PanelConnection(selected, connecting, true);
+                panelConnection = new PanelConnection(selected, connecting, true, BreakConnectionItem_Click);
 
                 if (selected.StatementType == connectingGStatement.StatementType)
                 {
@@ -361,7 +389,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
                     return;
                 }
 
-                panelConnection = new PanelConnection(selected, connecting, false);
+                panelConnection = new PanelConnection(selected, connecting, false, BreakConnectionItem_Click);
                 Statement statement = selected.GetBoundProperty() as Statement;
                 Property property = connectingGProperty.GetBoundProperty() as Property;
 
@@ -440,6 +468,21 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             Workspace.Children.Remove(iPanel as Control);
         }
 
+        private void BreakConnectionItem_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Bye bye");
+
+            PanelConnection connection = (sender as MenuItem).Tag as PanelConnection;
+
+            connection.Delete();
+            Connections.Remove(connection);
+
+            Statement first = (connection.First as GStatement).GetBoundProperty() as Statement;
+            Statement second = (connection.Second as GStatement).GetBoundProperty() as Statement;
+
+            first.NextStatements.Remove(second);
+        }
+
         // -------- Start Statements --------
 
         private void StartStatementItem_Click(object sender, RoutedEventArgs e)
@@ -480,9 +523,17 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
         private void StartPosition_LostFocus(object sender, RoutedEventArgs e)
         {
-            int newPosition = int.Parse((sender as TextBox).Text) - 1;
 
-            if (newPosition + 1 > conversation.StartStatements.Count)
+            int newPosition;
+
+            if (!int.TryParse((sender as TextBox).Text, out newPosition) ){
+                UpdateStartStatementsSequence();
+                return;
+            }
+
+            newPosition--;
+
+            if (newPosition + 1 > conversation.StartStatements.Count || newPosition < 0)
             {
                 UpdateStartStatementsSequence();
                 return;
@@ -563,8 +614,8 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             {
                 GStatement first = presentation.GetGStatement(connection.First as GSPresentation);
 
-                if (connection.Second is GSPresentation) Connections.Add(new PanelConnection(first, presentation.GetGStatement(connection.Second as GSPresentation), true));
-                else Connections.Add(new PanelConnection(first, presentation.GetGProperty(connection.Second as GPPresentation)));
+                if (connection.Second is GSPresentation) Connections.Add(new PanelConnection(first, presentation.GetGStatement(connection.Second as GSPresentation), true, BreakConnectionItem_Click));
+                else Connections.Add(new PanelConnection(first, presentation.GetGProperty(connection.Second as GPPresentation), false, BreakConnectionItem_Click));
             }
         }
 

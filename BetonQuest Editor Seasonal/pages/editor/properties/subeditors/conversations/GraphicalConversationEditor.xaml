@@ -35,6 +35,23 @@
 
             </Grid>
 
+            <StackPanel Name="PropertyDynamicCreator" HorizontalAlignment="Left" Background="#b3b3b3" Width="0">
+                
+                <TextBlock FontSize="16" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand" MouseDown="PropertyAddClose_MouseDown"> ✖</TextBlock>
+                <TextBlock Name="PropertyDynamicCreatorTitle" Style="{StaticResource DefaultText73}" FontSize="26" Margin="20, 20, 75, 20"> New PROPERTY </TextBlock>
+                
+                <TextBlock Style="{StaticResource DefaultText73}"  FontSize="18" Margin="20, 0, 0, 0"> ID </TextBlock>
+                <TextBox Style="{StaticResource DefaultTextBox8c}" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
+                <Separator Margin="20, 0, 20, 0"/>
+
+                <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" Margin="20, 20, 0, 0"> Content </TextBlock>
+                <TextBox Style="{StaticResource DefaultTextBox8c}" AcceptsReturn="True" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
+                <Separator Margin="20, 0, 20, 0"/>
+
+                <Button Style="{StaticResource ModernButtonStyle}" Foreground="ForestGreen" BorderBrush="ForestGreen" Padding="5" FontSize="20" Margin="20, 50, 20, 20">Done! </Button>
+                
+            </StackPanel>
+            
         </Grid>
 
         <ScrollViewer Name="ScrollViewer" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1" PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp" PreviewMouseMove="ScrollViewer_PreviewMouseMove">

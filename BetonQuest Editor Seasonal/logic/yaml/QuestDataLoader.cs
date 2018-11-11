@@ -122,7 +122,15 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
                             string value = ((YamlScalarNode)readType.Value).Value;
 
                             if (key.Equals("quester", StringComparison.InvariantCultureIgnoreCase)) conversation = Project.Quest.GetConversation(value);
-                            if (key.Equals("first", StringComparison.InvariantCultureIgnoreCase)) conversation.StartStatementsList = value;
+                            if (key.Equals("first", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                if (conversation == null)
+                                {
+                                    MessageBox.Show("error in file with: " + file);
+                                    return;
+                                }
+                                conversation.StartStatementsList = value;
+                            }
                         }
                         else if (readType.Value.NodeType == YamlNodeType.Mapping)
                         {

@@ -37,6 +37,7 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
             panelConnections = new List<PanelConnection>();
 
+            New.Tag = this;
             DeleteItem.Tag = this;
 
             this.property = property;
@@ -158,6 +159,7 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
 
         public void Prepare()
         {
+            New.Foreground = Brushes.White;
             Title.Foreground = Brushes.White;
             TitleSeparator.Background = Brushes.White;
             PropertyName.Foreground = Brushes.White;

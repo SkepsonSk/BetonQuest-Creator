@@ -14,7 +14,7 @@
         <SolidColorBrush x:Key="ControlBackground" Color="#a6a6a6"/>
 
         <System:String x:Key="Version"> 3.0 </System:String>
-        <System:String x:Key="VersionDescription"> (EN-en) BETA</System:String>
+        <System:String x:Key="VersionDescription"> (EN-en ONLY) CLOSED ALPHA </System:String>
         
         <System:String x:Key="Author"> Jakub Zelmanowicz </System:String>
 

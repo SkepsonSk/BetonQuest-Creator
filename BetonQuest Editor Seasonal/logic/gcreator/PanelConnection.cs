@@ -25,15 +25,24 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
 
         // --------
 
-        public PanelConnection(Control first, Control second, bool direction = false)
+        public PanelConnection(Control first, Control second, bool direction = false, RoutedEventHandler breakConnectionClick = null)
         {
             this.first = first;
             this.second = second;
 
             this.direction = direction;
 
-            if (direction) CreateArrow();
+            if (direction)
+            {
+                CreateArrow();
+                if (breakConnectionClick != null)
+                {
+                    (arrowLine.ContextMenu.Items[0] as MenuItem).Click += breakConnectionClick;
+                    (arrowLine.ContextMenu.Items[0] as MenuItem).Tag = this;
+                }
+            }
             else CreateLine();
+
         }
 
         // -------- Creating connection --------
@@ -132,7 +141,12 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator
         public ContextMenu CreateArrowContextMenu()
         {
             ContextMenu arrowLineContextMenu = new ContextMenu();
-            arrowLineContextMenu.Items.Add(new MenuItem().Header = "Break connection");
+
+            MenuItem breakConnection = new MenuItem();
+            breakConnection.Name = "BreakConnection";
+            breakConnection.Header = "Break connection";
+
+            arrowLineContextMenu.Items.Add(breakConnection);
 
             return arrowLineContextMenu;
         }
