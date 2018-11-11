@@ -9,6 +9,8 @@
         <SolidColorBrush x:Key="Background" Color="#cccccc"/>
         <SolidColorBrush x:Key="BackgroundOpacity" Color="#cccccc" Opacity="0.5"/>
 
+        <SolidColorBrush x:Key="BackgroundDarker" Color="#b3b3b3"/>
+
         <SolidColorBrush x:Key="ControlBackground" Color="#a6a6a6"/>
 
         <System:String x:Key="Version"> 3.0 </System:String>

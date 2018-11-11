@@ -1,7 +1,9 @@
-﻿using BetonQuest_Editor_Seasonal.logic;
+﻿using BetonQuest_Editor_Seasonal.controls;
+using BetonQuest_Editor_Seasonal.logic;
 using BetonQuest_Editor_Seasonal.logic.online;
 using BetonQuest_Editor_Seasonal.logic.yaml;
 using BetonQuest_Editor_Seasonal.pages.editor;
+using BetonQuest_Editor_Seasonal.pages.management;
 using BetonQuest_Editor_Seasonal.pages.online;
 using BetonQuest_Editor_Seasonal.pages.online.market;
 using BetonQuest_Editor_Seasonal.pages.settings;
@@ -32,7 +34,7 @@ namespace BetonQuest_Editor_Seasonal.pages
 {
     public partial class WelcomePage : Page
     {
-        private string pathToLoad;
+        private double projectsSidepanelWidth = 300d;
 
         // -------- Initializator --------
 
@@ -80,7 +82,30 @@ namespace BetonQuest_Editor_Seasonal.pages
                 UpdatePanel.Opacity = 1d;
             }
 
+            UpdateProjects();
+            ProjectsSidepanel.Width = 0d;
+
             Tools.Animations.FadeIn(Page, .4d, null);
+        }
+
+        private void UpdateProjects()
+        {
+            foreach (string file in Directory.GetFiles(Project.ApplicationDirectory + @"\definitions"))
+            {
+                string id = file.Substring(file.LastIndexOf(@"\") + 1);
+                id = id.Substring(0, id.LastIndexOf('.'));
+
+                string name = File.ReadAllText(file);
+
+                View view = new View(name, new object[] { id } , true, false, false, "", null);
+               // view.SetHeadFontSize(21d);
+                view.Cursor = Cursors.Hand;
+                view.Margin = new Thickness(0d, 0d, 0d, 10d);
+
+                view.MouseDown += Project_MouseDown;
+
+                Projects.Children.Add(view);
+            }
         }
 
         // -------- Event Handling --------
@@ -92,14 +117,15 @@ namespace BetonQuest_Editor_Seasonal.pages
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
+            Tools.Animations.SlideRight(ProjectsSidepanel, projectsSidepanelWidth, 0.25d, null);
+        }
+
+        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Select the 'main.yml' file";
 
-            if (dialog.ShowDialog() == true)
-            {
-                pathToLoad = dialog.FileName;
-                MainWindow.Instance.Navigate(new LoadingPage(pathToLoad));
-            }
+            if (dialog.ShowDialog() == true) MainWindow.Instance.Navigate(new LoadingPage(dialog.FileName.Substring(0, dialog.FileName.LastIndexOf('\\'))));
         }
 
         private void MarketButton_Click(object sender, RoutedEventArgs e)
@@ -109,13 +135,25 @@ namespace BetonQuest_Editor_Seasonal.pages
 
         private void LastProjectName_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            pathToLoad = Project.LastEditedProjectPath + @"\main.yml";
-            MainWindow.Instance.Navigate(new LoadingPage(pathToLoad));
+            MainWindow.Instance.Navigate(new LoadingPage(Project.LastEditedProjectPath));
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.Navigate(new SettingsHub());
+        }
+
+        // ---- Projects Slidepanel ----
+
+        private void CloseSidepanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Tools.Animations.SlideLeft(ProjectsSidepanel, projectsSidepanelWidth, 0.25d, null);
+        }
+
+        private void Project_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            string id = (sender as View).Data[0] as string;
+            MainWindow.Instance.Navigate(new LoadingPage(Project.ApplicationDirectory + @"\projects\" + id));
         }
 
         // ---------
@@ -224,10 +262,10 @@ namespace BetonQuest_Editor_Seasonal.pages
             WebsiteDownload.Visibility = Visibility.Collapsed;
         }
 
-        //test
+        //testing purposes only
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.Instance.ShowColorBar();
+            MainWindow.Instance.LoadToFloatingFrame(new ExploratorPage(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)));
         }
     }
 }

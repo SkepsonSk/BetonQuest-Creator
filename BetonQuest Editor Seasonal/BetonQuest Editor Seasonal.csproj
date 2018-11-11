@@ -135,9 +135,10 @@
     <Compile Include="controls\PropertyView.xaml.cs">
       <DependentUpon>PropertyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controls\View.xaml.cs">
+    <Compile Include="controls\view\View.xaml.cs">
       <DependentUpon>View.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor.cs" />
     <Compile Include="logic\alerting\Alert.cs" />
     <Compile Include="logic\alerting\AlertType.cs" />
     <Compile Include="logic\colors\ColorConverter.cs" />
@@ -220,6 +221,9 @@
     <Compile Include="pages\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\management\ExploratorPage.xaml.cs">
+      <DependentUpon>ExploratorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\online\ConnectingPage.xaml.cs">
       <DependentUpon>ConnectingPage.xaml</DependentUpon>
     </Compile>
@@ -295,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="controls\View.xaml">
+    <Page Include="controls\view\View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -373,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\management\ExploratorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

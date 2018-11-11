@@ -68,6 +68,9 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
             return null;
         }
 
+        // ----
+
+        [Obsolete("Function is OUTDATED! Use GetProperty instead.")]
         public Property GetEvent(string id, string[] ignored = null)
         {
             foreach (Property property in Events)
@@ -86,6 +89,7 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
             return null;
         }
 
+        [Obsolete("Function is OUTDATED! Use GetProperty instead.")]
         public Property GetCondition(string id, string[] ignored = null)
         {
             foreach (Property property in Conditions)
@@ -154,6 +158,39 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
             return null;
         }
 
+        // new style
+        public Property GetProperty(PropertyType type, string id)
+        {  
+            List<Property> properties;
+
+            if (type == PropertyType.Event) properties = Events;
+            else if (type == PropertyType.Condition) properties = Conditions;
+
+            else properties = Items;
+
+            foreach (Property property in properties)
+            {
+                if (property.ID == id) return property;
+            }
+
+            return null;
+        }
+
+        // new style
+        public Statement GetStatement(Conversation conversation, StatementType type, string id)
+        {
+            List<Statement> statements;
+
+            if (type == StatementType.NPC) statements = conversation.NPCStatements;
+            else statements = conversation.PlayerStatements;
+
+            foreach (Statement statement in statements)
+            {
+                if (statement.ID == id) return statement;
+            }
+
+            return null;
+        }
 
     }
 }

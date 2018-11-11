@@ -20,6 +20,10 @@ using System.Diagnostics;
 using Ionic.Zip;
 using BetonQuest_Editor_Seasonal.logic.online;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using BetonQuest_Editor_Seasonal.logic.structure.conversating;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using BetonQuest_Editor_Seasonal.logic.gcreator.presentation;
 
 namespace BetonQuest_Editor_Seasonal.pages.editor
 {
@@ -73,13 +77,29 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             Project.SaveLastEditedProject();
 
             new QuestDataSaver(Project.Quest, Project.ApplicationDirectory + @"\projects");
+
+            if (Directory.Exists(Project.ApplicationDirectory + @"\gce\" + Project.Quest.ID)) Tools.EmptyFolder(new DirectoryInfo(Project.ApplicationDirectory + @"\gce\" + Project.Quest.ID + @"\"));
+            Directory.CreateDirectory(Project.ApplicationDirectory + @"\gce\" + Project.Quest.ID);
+
+            foreach (Conversation conversation in Project.Quest.Conversations)
+            {
+                if (conversation.GraphicalConversationEditor == null) continue;
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(Project.ApplicationDirectory + @"\gce\" + Project.Quest.ID + @"\" + conversation.NPCName + conversation.NPCID + ".gce", FileMode.Create, FileAccess.Write, FileShare.None);
+
+                formatter.Serialize(stream, new GCEPresentation(conversation.GraphicalConversationEditor));
+
+                stream.Close();
+            }
+
             EditorHub.HubInstance.Alert("Project has been saved!", AlertType.Success, 3);
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             string exportPath;
-            string message = "Projec has been EXPORTED!";
+            string message = "Project has been EXPORTED!";
 
             if (!CommonFileDialog.IsPlatformSupported)
             {
@@ -88,8 +108,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             }
             else
             {
-                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-                dialog.IsFolderPicker = true;
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog { IsFolderPicker = true };
 
                 CommonFileDialogResult result = dialog.ShowDialog();
 

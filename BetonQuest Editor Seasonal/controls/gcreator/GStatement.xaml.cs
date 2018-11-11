@@ -23,18 +23,21 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
         private List<PanelConnection> panelConnections;
         private Statement statement;
 
-        private StatementType statementType;
+        public StatementType StatementType { get; }
+        public Brush SetBorderBrush { get; set; }
 
         // -------- Start --------
 
-        public GStatement(StatementType statementType, Statement statement = null)
+        public GStatement(StatementType statementType, Statement statement = null, bool start = false)
         {
             InitializeComponent();
 
-            this.statementType = statementType;
+            StatementType = statementType;
 
+            StartItem.Tag = this;
             CreateConnectionItem.Tag = this;
             DeleteItem.Tag = this;
+            StartPosition.Tag = this;
 
             panelConnections = new List<PanelConnection>();
 
@@ -51,7 +54,21 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
                 Content.Text = statement.Content;
             }
 
-            if (statementType == StatementType.Player) Title.Text = "Player Statement";
+            SetBorderBrush = Brushes.Transparent;
+
+            if (statementType == StatementType.Player)
+            {
+                StartPosition.Visibility = Visibility.Collapsed;
+                StartItem.Visibility = Visibility.Collapsed;
+                Title.Text = "Player Statement";
+            }
+            else if (start)
+            {
+                StartItem.Header = "Remove from start statements";
+                SetBorderBrush = Brushes.Orange;
+            }
+
+            
             else Title.Text = "NPC Statement";
 
             ID.Text = this.statement.ID;
@@ -74,13 +91,6 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             statement = property as Statement;
         }
 
-        // ----
-
-        public StatementType StatementType {
-            get {
-                return statementType;
-            }
-        }
 
         // -------- Events --------
 
@@ -92,6 +102,16 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
         private void ID_LostFocus(object sender, RoutedEventArgs e)
         {
             statement.ID = ID.Text;
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Border.BorderBrush = Brushes.Gray;
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Border.BorderBrush = SetBorderBrush;
         }
     }
 }

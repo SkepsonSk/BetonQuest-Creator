@@ -19,45 +19,9 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
 
         // -------- Initializator --------
 
-        public QuestDataLoader(string main)
+        public QuestDataLoader(string directory)
         {
-            directory = main.Substring(0, main.LastIndexOf(@"\"));
-
-            Console.WriteLine(directory);
-
-            if (directory.Contains(Project.ApplicationDirectory))
-            {
-                string id = directory.Substring(directory.LastIndexOf(@"\") + 1);
-                Project.Quest = new Quest(id);
-
-                if (!File.Exists(Project.ApplicationDirectory + @"\definitions\" + id + ".txt")) return;
-                string name = File.ReadAllLines(Project.ApplicationDirectory + @"\definitions\" + id + ".txt")[0];
-
-                Project.Quest.Name = name;
-
-                Console.WriteLine("Project loading: " + Project.Quest.ID + ", " + Project.Quest.Name);
-            }
-            else
-            {
-                if (!Tools.ProjectImportPathFine(directory))
-                {
-                    Console.WriteLine("invalid directory"); return;
-                }
-
-                string id = Tools.GenerateID();
-                string name = directory.Substring(directory.LastIndexOf(@"\") + 1);
-
-                Directory.CreateDirectory(Project.ApplicationDirectory + @"\projects\" + id);
-                Tools.CopyDirectory(new DirectoryInfo(directory), new DirectoryInfo(Project.ApplicationDirectory + @"\projects\" + id));
-
-                File.Create(Project.ApplicationDirectory + @"\definitions\" + id + @".txt").Dispose();
-                File.WriteAllLines(Project.ApplicationDirectory + @"\definitions\" + id + @".txt", new string[] { name });
-
-                Project.Quest = new Quest(id);
-                Project.Quest.Name = name;
-
-                Console.WriteLine("Project (imported) loading: " + Project.Quest.ID + ", " + Project.Quest.Name);
-            }
+            this.directory = directory;
 
             LoadMain();
             LoadProperties("events.yml", Project.Quest.Events);
@@ -66,9 +30,6 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
             LoadProperties("journal.yml", Project.Quest.JournalEntries);
             LoadProperties("items.yml", Project.Quest.Items);
             LoadConversations();
-
-            //Project.ApplyQuestChanges();
-            //Project.StartSaveGuard();
         }
 
         // --------- Loaders --------
@@ -138,6 +99,8 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
 
         private void LoadConversations()
         {
+            if (!Directory.Exists(directory + @"\conversations")) return;
+
             foreach (string file in Directory.GetFiles(directory + @"\conversations"))
             {
                 using (StringReader reader = new StringReader(File.ReadAllText(file)))

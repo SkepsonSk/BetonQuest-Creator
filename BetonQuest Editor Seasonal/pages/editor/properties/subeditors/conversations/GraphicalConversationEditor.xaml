@@ -20,7 +20,21 @@
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="30" TextAlignment="Center"> Hey there!</TextBlock>
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="24" TextAlignment="Center"> to begin, just right-click ;) </TextBlock>
             </StackPanel>
-            
+
+            <Grid Name="TopInformationBar" VerticalAlignment="Top" Height="0">
+
+                <Grid.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#ff3399" Offset="0"/>
+                        <GradientStop Color="#99004d" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <TextBlock Name="InformationContent" Style="{StaticResource DefaultText73}" VerticalAlignment="Center" Foreground="White" FontSize="14" Margin="15, 0, 0, 0"> Information</TextBlock>
+                <Button Name="InformationButton" Style="{StaticResource ModernButtonStyle}" HorizontalAlignment="Right" Margin="5, 5, 15, 5" Padding="10, 0, 10, 0" BorderBrush="White" Foreground="White">SPECIAL</Button>
+
+            </Grid>
+
         </Grid>
 
         <ScrollViewer Name="ScrollViewer" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1" PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp" PreviewMouseMove="ScrollViewer_PreviewMouseMove">
@@ -49,8 +63,8 @@
                             <MenuItem Header="NPC" Click="CreateNPCStatement_MenuItem_Click"/>
                         </MenuItem>
 
-                        <MenuItem Header="New EVENT" Click="CreateEvent_MenuItem_Click"/>
-                        <MenuItem Header="New CONDITION" Click="CreateCondition_MenuItem_Click"/>
+                        <MenuItem Header="Add EVENT" Click="CreateEvent_MenuItem_Click"/>
+                        <MenuItem Header="Add CONDITION" Click="CreateCondition_MenuItem_Click"/>
 
                     </ContextMenu>
 

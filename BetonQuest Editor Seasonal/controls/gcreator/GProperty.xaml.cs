@@ -119,6 +119,17 @@ namespace BetonQuest_Editor_Seasonal.controls.gcreator
             else PropertyContent.Text =  property.Command;
         }
 
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (type == PropertyType.Event) Body.BorderBrush = Brushes.ForestGreen;
+            else if (type == PropertyType.Condition) Body.BorderBrush = Brushes.DarkOrange;
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Body.BorderBrush = Brushes.Transparent;
+        }
+
         // ----
 
         private void ChangeToPropertyDataDisplay(object sender, EventArgs e)

@@ -50,11 +50,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties
             ControlManager.RegisteredPages.Add(this);
         }
 
-        private bool SpecialButtonCanBeShown(object[] data)
-        {
-            return true;
-        }
-
         // -------- Editor Frame Operations --------
 
         public void OpenEditorNoEffect(Page page)
@@ -133,7 +128,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties
             conversationCreated = new Conversation(NameTextBox.Text, int.Parse(IDTextBox.Text));
             Project.Quest.Conversations.Add(conversationCreated);
 
-            Tools.PropertyListManagement.AddToPropertiesList(conversationCreated, Conversations, PropertyView_Interact, true, "GRAPH", SpecialButton_Click, null);
+            Tools.PropertyListManagement.AddToPropertiesList(conversationCreated, Conversations, PropertyView_Interact);
 
             ConversationsTitle.Text = "Created conversations (" + Project.Quest.Conversations.Count + "):";
 
@@ -195,18 +190,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties
             }
         }
 
-        private void SpecialButton_Click(object sender, EventArgs e)
-        {
-            Button specialButton = sender as Button;
-            View view = specialButton.Tag as View;
-            Conversation conversation = view.Data[0] as Conversation;
-
-            if (conversation.GraphicalConversationEditor == null) return;
-
-            conversation.GraphicalConversationEditor.InvokeWorkspace();
-            MainWindow.Instance.DisplayFrame.Navigate(conversation.GraphicalConversationEditor);
-        }
-
         public void PropertyView_Interact(object sender, MouseButtonEventArgs e)
         {
             View view = sender as View;
@@ -247,7 +230,12 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties
                 }
                 else
                 {
-                    OpenEditor(new ConversationEditor(conversation));
+                    if (conversation.GraphicalConversationEditor == null) OpenEditor(new ConversationEditor(conversation));
+                    else
+                    {
+                        conversation.GraphicalConversationEditor.InvokeWorkspace();
+                        MainWindow.Instance.Navigate(conversation.GraphicalConversationEditor);
+                    }
                 }
             }
         }

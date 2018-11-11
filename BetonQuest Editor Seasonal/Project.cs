@@ -17,7 +17,7 @@ using System.Windows.Threading;
 
 namespace BetonQuest_Editor_Seasonal
 {
-    public class Project
+    public class Project 
     {
         public static Quest Quest;
 

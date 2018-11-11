@@ -10,24 +10,10 @@
 
     <Grid>
 
-        <StackPanel Name="MessageFrame" Visibility="Collapsed" Panel.ZIndex="3"  Background="#bfbfbf" HorizontalAlignment="Center" VerticalAlignment="Top" Width="500"  Margin="0, 75, 0, 0">
-
-            <TextBlock FontSize="20" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand" MouseDown="CloseMessageFrame_MouseDown"> ✖</TextBlock>
-
-            <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="15, 0, 15, 0"> Title </TextBlock>
-            <TextBlock Style="{StaticResource DefaultText73}" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="15, 5, 15, 0"> Message dada dada dad dadad daa dada</TextBlock>
-
-            <WrapPanel Margin="20" HorizontalAlignment="Center">
-                
-                <Button Name="MessageFrameAction1" Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5" Margin="0, 0, 5, 0">A1</Button>
-                <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5" Margin="0, 0, 5, 0">A2</Button>
-                <Button Style="{StaticResource ModernButtonStyle}" FontSize="16" Padding="2.5">A3</Button>
-            </WrapPanel>
-            
-        </StackPanel>
+        <Frame Panel.ZIndex="2" Name="FloatingFrame" Visibility="Collapsed" Margin="50"/>
 
         <DockPanel Panel.ZIndex="1">
-        
+
             <Grid Name="ActionBar" DockPanel.Dock="Bottom">
 
                 <TextBlock Style="{StaticResource DefaultText73}" HorizontalAlignment="Left" Foreground="White" FontSize="16" Margin="10, 7.5, 0, 7.5"> Content</TextBlock>
@@ -62,10 +48,10 @@
                 </WrapPanel>
 
                 <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Underline" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Underline </TextBlock>
-                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Strikethrough" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> STRIKE </TextBlock>
-                    <TextBlock Style="{StaticResource DefaultText73Italic}" FontSize="18" Margin="0, 0, 30, 0" Cursor="Hand"> Italic </TextBlock>
-                    <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Reset </TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Underline" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Underline</TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" TextDecorations="Strikethrough" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> STRIKE</TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73Italic}" FontSize="18" Margin="0, 0, 30, 0" Cursor="Hand"> Italic</TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, 0, 10, 0" Cursor="Hand"> Reset</TextBlock>
                 </WrapPanel>
 
             </Grid>

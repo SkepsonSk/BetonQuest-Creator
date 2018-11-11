@@ -11,10 +11,12 @@
     <Grid>
 
         <StackPanel Margin="10" VerticalAlignment="Center">
-            <TextBlock Name="Head" Style="{StaticResource DefaultText73}" FontSize="25" Margin="0, 0, 0, -5"> Head</TextBlock>
-            <TextBlock Name="Body" Style="{StaticResource DefaultText73}" FontSize="18"> Body</TextBlock>
+            <TextBlock Name="Head" Style="{StaticResource DefaultText73}" FontSize="25" > Head</TextBlock>
+            <TextBlock Name="Body" Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, -5, 0, 0"> Body </TextBlock>
         </StackPanel>
 
+        <TextBlock Name="CenterText" Style="{StaticResource DefaultText73}" FontSize="25" VerticalAlignment="Center" Margin="10, 0, 0, 0" Visibility="Collapsed"> Center Text </TextBlock>
+        
         <Button Name="SpecialButton" Style="{StaticResource ModernButtonStyle}" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="5" Margin="0, 0, 10, 0" Visibility="Collapsed"> SPECIAL </Button>
 
     </Grid>

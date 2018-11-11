@@ -24,6 +24,8 @@ namespace BetonQuest_Editor_Seasonal
         public static class PropertyListManagement
         {
 
+            public delegate void IteratingAction(object[] data);
+
             private static bool ListIsEmpty(StackPanel panel)
             {
                 if (panel.Children.Count == 1 && (panel.Children[0] as View).Data == null) return true;
@@ -40,22 +42,26 @@ namespace BetonQuest_Editor_Seasonal
                 view.Dispatcher.Invoke(new Action(() => { panel.Children.Add(view); }));
             }
 
-            public static void AddToPropertiesList(Property property, StackPanel panel, MouseButtonEventHandler handler, bool specialButtonVisible = false, string specialButtonText = "NONE", RoutedEventHandler specialButtonClick = null, View.SpecialButtonCanBeShown specialButtonCanBeShown = null)
+            public static void AddToPropertiesList(Property property, StackPanel panel, MouseButtonEventHandler handler, bool specialButtonVisible = false, string specialButtonText = "NONE", RoutedEventHandler specialButtonClick = null, IteratingAction iteratingAction = null)
             {
                 if (ListIsEmpty(panel)) panel.Children.Clear();
 
-                View view = new View(property.ID, property.Command, new object[] { property, false }, true, true, specialButtonVisible, specialButtonText, specialButtonClick, specialButtonCanBeShown);
+                View view = new View(property.ID, property.Command, new object[] { property, false }, true, true, specialButtonVisible, specialButtonText, specialButtonClick);
                 view.Margin = new Thickness(0d, 0d, 0d, 2.5d);
                 view.Cursor = Cursors.Hand;
 
+                if (iteratingAction != null) new IteratingAction(iteratingAction).Invoke(new object[] { view, property });
                 if (handler != null) view.MouseDown += handler;
 
                 panel.Children.Add(view);
             }
 
-            public static void LoadPropertiesToList(StackPanel panel, List<Property> properties, MouseButtonEventHandler handler, bool specialButtonVisible = false, string specialButtonText = "NONE", RoutedEventHandler specialButtonClick = null, View.SpecialButtonCanBeShown specialButtonCanBeShown = null)
+            public static void LoadPropertiesToList(StackPanel panel, List<Property> properties, MouseButtonEventHandler handler, bool specialButtonVisible = false, string specialButtonText = "NONE", RoutedEventHandler specialButtonClick = null, IteratingAction iteratingAction = null)
             {
-                foreach (Property property in properties) AddToPropertiesList(property, panel, handler, specialButtonVisible, specialButtonText, specialButtonClick, specialButtonCanBeShown);
+                foreach (Property property in properties)
+                {
+                    AddToPropertiesList(property, panel, handler, specialButtonVisible, specialButtonText, specialButtonClick, iteratingAction);
+                }
             }
 
             public static void RemoveFromPropertiesList(Property property, StackPanel panel, List<Property> properties, string message)
@@ -161,6 +167,32 @@ namespace BetonQuest_Editor_Seasonal
                 element.BeginAnimation(FrameworkElement.HeightProperty, animation);
             }
 
+            // -------- Width --------
+
+            public static void SlideRight(FrameworkElement control, double width, double duration, EventHandler completed)
+            {
+                DoubleAnimation animation = new DoubleAnimation();
+                animation.From = 0d;
+                animation.To = width;
+                animation.Duration = TimeSpan.FromSeconds(duration);
+
+                if (completed != null) animation.Completed += completed;
+
+                control.BeginAnimation(FrameworkElement.WidthProperty, animation);
+            }
+
+            public static void SlideLeft(FrameworkElement control, double width, double duration, EventHandler completed)
+            {
+                DoubleAnimation animation = new DoubleAnimation();
+                animation.From = width;
+                animation.To = 0d;
+                animation.Duration = TimeSpan.FromSeconds(duration);
+
+                if (completed != null) animation.Completed += completed;
+
+                control.BeginAnimation(FrameworkElement.WidthProperty, animation);
+            }
+
             public static void BackgroundColorAnimation(Panel control, Color to, double duration, bool autoReverse)
             {
                 SolidColorBrush brush = new SolidColorBrush();
@@ -253,10 +285,8 @@ namespace BetonQuest_Editor_Seasonal
 
         public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target)
         {
-            foreach (DirectoryInfo dir in source.GetDirectories())
-                CopyDirectory(dir, target.CreateSubdirectory(dir.Name));
-            foreach (FileInfo file in source.GetFiles())
-                file.CopyTo(Path.Combine(target.FullName, file.Name));
+            foreach (DirectoryInfo dir in source.GetDirectories()) CopyDirectory(dir, target.CreateSubdirectory(dir.Name));
+            foreach (FileInfo file in source.GetFiles()) file.CopyTo(Path.Combine(target.FullName, file.Name));
         }
 
         public static void EmptyFolder(DirectoryInfo directoryInfo)
@@ -279,15 +309,6 @@ namespace BetonQuest_Editor_Seasonal
         {
             if (Directory.GetFiles(directory).Length < 8 && Directory.GetDirectories(directory).Length == 1) return true;
             else return false;
-        }
-
-        public static List<T> CloneList<T>(List<T> oldList)
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream();
-            formatter.Serialize(stream, oldList);
-            stream.Position = 0;
-            return (List<T>)formatter.Deserialize(stream);
         }
 
         public static string ListToString(List<Property> list)

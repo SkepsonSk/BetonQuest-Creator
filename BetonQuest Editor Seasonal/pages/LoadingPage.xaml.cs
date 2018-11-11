@@ -1,4 +1,6 @@
-﻿using BetonQuest_Editor_Seasonal.logic.structure;
+﻿using BetonQuest_Editor_Seasonal.logic.gcreator.presentation;
+using BetonQuest_Editor_Seasonal.logic.structure;
+using BetonQuest_Editor_Seasonal.logic.structure.conversating;
 using BetonQuest_Editor_Seasonal.logic.yaml;
 using BetonQuest_Editor_Seasonal.pages.editor;
 using BetonQuest_Editor_Seasonal.pages.editor.properties;
@@ -9,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,15 +40,15 @@ namespace BetonQuest_Editor_Seasonal.pages
             this.path = path;
 
             MainWindow.Instance.NavigatorFree += BeginLoadingProject;
-
-            BeginLoadingProject();
         }
 
         // -------- Event-Based Operations --------
 
         private void BeginLoadingProject()
         {
+            Editor.InitiateProject(path);
             new QuestDataLoader(path);
+            Editor.LoadGCE(path);
 
             ConversationsPreparator.Navigate(new ConversationsPage());
             EventsPreparator.Navigate(new EventsPage());

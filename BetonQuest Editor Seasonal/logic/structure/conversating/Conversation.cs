@@ -198,7 +198,12 @@ namespace BetonQuest_Editor_Seasonal.logic.structure.conversating
         {
             for (int n = NPCStatements.Count - 1; n >= 0; n--)
             {
-                if (NPCStatements[n].Equals(statement)) NPCStatements.RemoveAt(n);
+                if (NPCStatements[n].Equals(statement))
+                {
+                    NPCStatements.RemoveAt(n);
+                    if (StartStatements.Contains(statement)) StartStatements.Remove(statement);
+                }
+                
             }
             for (int n = PlayerStatements.Count - 1; n >= 0; n--)
             {

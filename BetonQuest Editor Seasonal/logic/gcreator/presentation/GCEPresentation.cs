@@ -14,7 +14,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
     public class GCEPresentation
     {
         private static GraphicalConversationEditor graphicalConversationEditor;
-        private static Canvas workspace;
+        public static Canvas Workspace { get; set; }
 
         // ----
 
@@ -28,7 +28,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
         public GCEPresentation(GraphicalConversationEditor graphicalConversationEditor)
         {
             GCEPresentation.graphicalConversationEditor = graphicalConversationEditor;
-            workspace = graphicalConversationEditor.Workspace;
+            Workspace = graphicalConversationEditor.Workspace;
 
             Statements = new List<GSPresentation>();
             Properties = new List<GPPresentation>();
@@ -43,7 +43,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 
         private void HookProperties()
         {   
-            foreach (UIElement element in workspace.Children)
+            foreach (UIElement element in Workspace.Children)
             {
                 if (element is GStatement)
                 {
@@ -144,7 +144,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
             double statementPresentationX = statementPresentation.PointPresentation.X;
             double statementPresentationY = statementPresentation.PointPresentation.Y;
 
-            foreach (UIElement element in workspace.Children)
+            foreach (UIElement element in Workspace.Children)
             {
                 if (element is GStatement)
                 {
@@ -160,7 +160,7 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
             double propertyPresentationX = propertyPresentation.PointPresentation.X;
             double propertyPresentationY = propertyPresentation.PointPresentation.Y;
 
-            foreach (UIElement element in workspace.Children)
+            foreach (UIElement element in Workspace.Children)
             {
                 if (element is GProperty)
                 {

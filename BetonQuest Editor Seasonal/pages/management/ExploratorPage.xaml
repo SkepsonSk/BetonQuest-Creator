@@ -1,0 +1,52 @@
+﻿<Page x:Class="BetonQuest_Editor_Seasonal.pages.management.ExploratorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.pages.management"
+      mc:Ignorable="d" 
+      Background="{StaticResource Background}"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="ExploratorPage">
+
+
+    <Page.BitmapEffect>
+        <DropShadowBitmapEffect x:Name="Shadow" Color="#a6a6a6" Softness="0.4" ShadowDepth="5"/>
+    </Page.BitmapEffect>
+
+    <DockPanel>
+
+        <StackPanel Background="{StaticResource ControlBackground}" DockPanel.Dock="Left">
+
+            <TextBlock Style="{StaticResource DefaultText73}" FontSize="24" Margin="30, 50, 30, 5"> Desktop </TextBlock>
+            <TextBlock Style="{StaticResource DefaultText73}" FontSize="24" Margin="30, 5, 30, 10"> Documents </TextBlock>
+            
+            <TextBlock Style="{StaticResource DefaultText73}" FontSize="24" Margin="30, 10, 30, 5"> Disks: </TextBlock>
+
+            <StackPanel Name="Disks" Margin="40, 5, 30, 10"/>
+
+        </StackPanel>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" FontSize="20" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand"> ✖ </TextBlock>
+            <StackPanel Name="Files" Grid.Row="0" HorizontalAlignment="Left" Margin="25, 50, 0, 50"/>
+
+            <Border Grid.Row="1">
+
+                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0, 0, 20, 0">
+                    <Button Style="{StaticResource ModernButtonStyle}" FontSize="24" Padding="10">Choose</Button>
+                </WrapPanel>
+
+            </Border>
+            
+        </Grid>
+        
+    </DockPanel>
+    
+</Page>

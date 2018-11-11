@@ -12,6 +12,8 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
     public class GPPresentation : PanelPresentation
     {
 
+        public string PropertyID { get; }
+
         public Property Property { get; }
         public PropertyType PropertyType { get; }
 
@@ -19,6 +21,8 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
 
         public GPPresentation(GProperty property)
         {
+            PropertyID = property.GetBoundProperty().ID;
+
             Property = property.GetBoundProperty() as Property;
             PropertyType = property.Type;
         }

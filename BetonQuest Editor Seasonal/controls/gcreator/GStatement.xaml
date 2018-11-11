@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.controls.gcreator"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="275">
+             d:DesignHeight="250" d:DesignWidth="275"
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave">
 
     <UserControl.ContextMenu>
         <ContextMenu>
@@ -15,12 +17,13 @@
                 <MenuItem Name="BreakConnectionItem" Header="Break"/>
             </MenuItem>
 
+            <MenuItem Name="StartItem" Header="Add to start statements"/>
             <MenuItem Name="DeleteItem" Header="Delete"/>
 
         </ContextMenu>
     </UserControl.ContextMenu>
 
-    <Border Background="{StaticResource Background}" CornerRadius="5, 5, 5, 5" Padding="5">
+    <Border Name="Border" Background="{StaticResource Background}" CornerRadius="5, 5, 5, 5" Padding="5" BorderThickness="3">
 
         <Border.BitmapEffect>
             <DropShadowBitmapEffect x:Name="Shadow" Color="#a6a6a6" Softness="0.4" ShadowDepth="5"/>
@@ -28,8 +31,10 @@
 
         <Grid Name="Space">
 
+            <TextBox Name="StartPosition" Style="{StaticResource DefaultTextBox8c}" Foreground="Orange" FontSize="20" HorizontalAlignment="Right" Margin="5" Panel.ZIndex="2" Visibility="Collapsed"> 000 </TextBox>
+
             <StackPanel VerticalAlignment="Top" Margin="5, 5, 5, 0">
-                <TextBlock  Name="Title" Style="{StaticResource DefaultText73}" FontSize="24"> Statement</TextBlock>
+                <TextBlock  Name="Title" Style="{StaticResource DefaultText73}" FontSize="24"> Statement </TextBlock>
 
                 <TextBlock Name="ContentDescription" Style="{StaticResource DefaultText73}" FontSize="18" Margin="0, 5, 0, 0"> Content</TextBlock>
                 <TextBox Name="Content" Style="{StaticResource DefaultTextBox8c}" FontSize="16"  AcceptsReturn="True" LostFocus="Content_LostFocus"/>

@@ -14,11 +14,15 @@ namespace BetonQuest_Editor_Seasonal.logic.gcreator.presentation
     {
         public GSPresentation(GStatement statement)
         {
+            StatementID = statement.GetBoundProperty().ID;
+
             Statement = statement.GetBoundProperty() as Statement;
             Type = statement.StatementType;
         }
 
         // -------- Access --------
+
+        public string StatementID { get; }
 
         public Statement Statement { get; }
         public StatementType Type { get; }

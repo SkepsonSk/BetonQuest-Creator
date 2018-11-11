@@ -51,6 +51,8 @@ namespace BetonQuest_Editor_Seasonal
 
             instance = this;
 
+            Editor.Initiate();
+
             Project.VerifyDirectories();
             Project.VerifyEnchantDefaultFiles();
 
@@ -87,7 +89,7 @@ namespace BetonQuest_Editor_Seasonal
 
         private void NavigationFinished(object sender, EventArgs e)
         {
-            NavigatorFree();
+            if (NavigatorFree != null) NavigatorFree();
             NavigatorFree = null;
         }
 
@@ -95,9 +97,32 @@ namespace BetonQuest_Editor_Seasonal
 
         // -------- Message Communication System (SWA compatibility) --------
 
+        public void LoadToFloatingFrame(Page page)
+        {
+            FloatingFrame.Visibility = Visibility.Visible;
+            FloatingFrame.Opacity = 0d;
+
+            FloatingFrame.Navigate(page);
+
+            Tools.Animations.FadeIn(FloatingFrame, .25d, null);
+
+            BlurEffect effect = new BlurEffect();
+            effect.Radius = 0d;
+
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 0d;
+            animation.To = 10d;
+            animation.Duration = TimeSpan.FromSeconds(0.5d);
+
+            effect.BeginAnimation(BlurEffect.RadiusProperty, animation);
+
+            DisplayFrame.Effect = effect;
+            ActionBar.Effect = effect; 
+        }
+
         public void ShowMessageFrame(string title, string message)
         {
-            MessageFrame.Visibility = Visibility.Visible;
+           /* MessageFrame.Visibility = Visibility.Visible;
             MessageFrame.Opacity = 0d;
 
             Tools.Animations.FadeIn(MessageFrame, .25d, null);
@@ -113,14 +138,14 @@ namespace BetonQuest_Editor_Seasonal
             effect.BeginAnimation(BlurEffect.RadiusProperty, animation);
 
             DisplayFrame.Effect = effect;
-            ActionBar.Effect = effect;
+            ActionBar.Effect = effect;*/
         }
 
         // ----
 
         public void HideMessageFrame()
         {
-            Tools.Animations.FadeOut(MessageFrame, .25d, ChangeMessageFrameVisibility);
+            /*Tools.Animations.FadeOut(MessageFrame, .25d, ChangeMessageFrameVisibility);
 
             BlurEffect effect = DisplayFrame.Effect as BlurEffect;
 
@@ -132,12 +157,12 @@ namespace BetonQuest_Editor_Seasonal
             effect.BeginAnimation(BlurEffect.RadiusProperty, animation);
 
             DisplayFrame.Effect = effect;
-            ActionBar.Effect = effect;
+            ActionBar.Effect = effect;*/
         }
 
         private void ChangeMessageFrameVisibility(object sender, EventArgs e)
         {
-            MessageFrame.Visibility = Visibility.Collapsed;
+           // MessageFrame.Visibility = Visibility.Collapsed;
         }
 
         // ----

@@ -9,7 +9,6 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
 {
     public class QuestDataImage
     {
-
         private string name;
 
         private List<Conversation> conversations;
@@ -24,16 +23,7 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
 
         public QuestDataImage(Quest quest)
         {
-            name = quest.Name.Clone() as string;
-
-            conversations = Tools.CloneList<Conversation>(quest.Conversations);
-
-            events = Tools.CloneList<Property>(quest.Events);
-            conditions = Tools.CloneList<Property>(quest.Conditions);
-            objectives = Tools.CloneList<Property>(quest.Objectives);
-            journalEntries = Tools.CloneList<Property>(quest.JournalEntries);
-            items = Tools.CloneList<Property>(quest.Items);
-        }
+            name = quest.Name.Clone() as string;        }
 
         // -------- Access --------
 

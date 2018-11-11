@@ -21,12 +21,14 @@ namespace BetonQuest_Editor_Seasonal.controls
 
         private object[] data;
 
+        private TextBlock head;
+
         private bool acceptsLeftClick;
         private bool acceptsRightClick;
 
         // -------- Initializator --------
 
-        public View(string head, string body, object[] data, bool acceptsLeftClick = true, bool acceptsRightClick = true, bool specialButtonVisible = false, string specialButtonText = "NULL", RoutedEventHandler specialButtonClick = null, SpecialButtonCanBeShown conditionToShow = null)
+        public View(string head, string body, object[] data, bool acceptsLeftClick = true, bool acceptsRightClick = true, bool specialButtonVisible = false, string specialButtonText = "NULL", RoutedEventHandler specialButtonClick = null)
         {
             InitializeComponent();
 
@@ -35,18 +37,7 @@ namespace BetonQuest_Editor_Seasonal.controls
             this.acceptsLeftClick = acceptsLeftClick;
             this.acceptsRightClick = acceptsRightClick;
 
-            if (conditionToShow == null)
-            {
-                if (specialButtonVisible)
-                {
-                    SpecialButton.Content = specialButtonText;
-                    if (specialButtonClick != null) SpecialButton.Click += specialButtonClick;
-                    SpecialButton.Visibility = Visibility.Visible;
-
-                    SpecialButton.Tag = this;
-                }
-            }
-            else if (conditionToShow.Invoke(data))
+            if (specialButtonVisible)
             {
                 SpecialButton.Content = specialButtonText;
                 if (specialButtonClick != null) SpecialButton.Click += specialButtonClick;
@@ -59,7 +50,7 @@ namespace BetonQuest_Editor_Seasonal.controls
             Body.Text = body;
         }
 
-        public View(string head, object[] data, bool acceptsLeftClick = true, bool acceptsRightClick = true, bool specialButtonVisible = false, string specialButtonText = "NULL", RoutedEventHandler specialButtonClick = null, SpecialButtonCanBeShown conditionToShow = null)
+        public View(string head, object[] data, bool acceptsLeftClick = true, bool acceptsRightClick = true, bool specialButtonVisible = false, string specialButtonText = "NULL", RoutedEventHandler specialButtonClick = null)
         {
             InitializeComponent();
 
@@ -68,18 +59,7 @@ namespace BetonQuest_Editor_Seasonal.controls
             this.acceptsLeftClick = acceptsLeftClick;
             this.acceptsRightClick = acceptsRightClick;
 
-            if (conditionToShow == null)
-            {
-                if (specialButtonVisible)
-                {
-                    SpecialButton.Content = specialButtonText;
-                    if (specialButtonClick != null) SpecialButton.Click += specialButtonClick;
-                    SpecialButton.Visibility = Visibility.Visible;
-
-                    SpecialButton.Tag = this;
-                }
-            }
-            else if (conditionToShow.Invoke(data))
+            if (specialButtonVisible)
             {
                 SpecialButton.Content = specialButtonText;
                 if (specialButtonClick != null) SpecialButton.Click += specialButtonClick;
@@ -89,9 +69,6 @@ namespace BetonQuest_Editor_Seasonal.controls
             }
 
             Head.Text = head;
-            Head.VerticalAlignment = VerticalAlignment.Center;
-            Head.Margin = new Thickness(0d);
-
             Body.Visibility = Visibility.Collapsed;
         }
 
