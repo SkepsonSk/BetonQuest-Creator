@@ -27,8 +27,6 @@
 
             <Grid DockPanel.Dock="Top" >
 
-                <TextBlock Name="New" Style="{StaticResource DefaultText73}" FontSize="24" Margin="0, 5, 0, 0" HorizontalAlignment="Right" Cursor="Hand" Panel.ZIndex="2"> + </TextBlock>
-
                 <StackPanel>
                     <TextBlock Name="Title" Style="{StaticResource DefaultText73}" FontSize="24" Margin="0, 5, 0, 0" > PROPERTY </TextBlock>
                     <Separator Name="TitleSeparator"/>

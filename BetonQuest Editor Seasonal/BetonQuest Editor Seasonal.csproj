@@ -173,6 +173,7 @@
     <Compile Include="logic\structure\Quest.cs" />
     <Compile Include="logic\structure\QuestDataImage.cs" />
     <Compile Include="logic\structure\StatementType.cs" />
+    <Compile Include="logic\yaml\ConversationData.cs" />
     <Compile Include="logic\yaml\QuestDataLoader.cs" />
     <Compile Include="logic\yaml\QuestDataSaver.cs" />
     <Compile Include="pages\editor\EditorHub.xaml.cs">
@@ -423,6 +424,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\WelcomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\Strings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\styles\TextBlocks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\styles\TextBoxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,14 +20,14 @@
 
     <DockPanel LastChildFill="True">
 
-            <UniformGrid DockPanel.Dock="Top" Name="NavigatorPanel" Columns="7" Height="30" Background="#bfbfbf" VerticalAlignment="Top">
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Start" Click="NavigationButton_Click">Start</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Conversations" Click="NavigationButton_Click">Conversations</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Events" Click="NavigationButton_Click">Events</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Conditions" Click="NavigationButton_Click">Conditions</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Objectives"  Click="NavigationButton_Click">Objectives</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Journal" Click="NavigationButton_Click">Journal</Button>
-                <Button Style="{StaticResource FlatButtonStyle}" Name="Items" Click="NavigationButton_Click">Items</Button>
+            <UniformGrid DockPanel.Dock="Top" Name="NavigatorPanel" Columns="7" Height="40" Background="#bfbfbf" VerticalAlignment="Top">
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Start" FontSize="16" Click="NavigationButton_Click">Start</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Conversations" FontSize="16" Click="NavigationButton_Click">Conversations</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Events" FontSize="16" Click="NavigationButton_Click">Events</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Conditions" FontSize="16" Click="NavigationButton_Click">Conditions</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Objectives" FontSize="16" Click="NavigationButton_Click">Objectives</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Journal" FontSize="16" Click="NavigationButton_Click">Journal</Button>
+                <Button Style="{StaticResource FlatButtonStyle}" Name="Items" FontSize="16" Click="NavigationButton_Click">Items</Button>
             </UniformGrid>
 
         <Grid Name="AlertBar" Height="30" Margin="0, 5, 0, 0" DockPanel.Dock="Bottom">

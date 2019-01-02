@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal.xaml">
+
+    <SolidColorBrush x:Key="Background" Color="#cccccc"/>
+    <SolidColorBrush x:Key="BackgroundOpacity" Color="#cccccc" Opacity="0.5"/>
+
+    <SolidColorBrush x:Key="BackgroundDarker" Color="#b3b3b3"/>
+
+    <SolidColorBrush x:Key="ControlBackground" Color="#a6a6a6"/>
+
+</ResourceDictionary>

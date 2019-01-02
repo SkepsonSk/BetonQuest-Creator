@@ -6,157 +6,19 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <SolidColorBrush x:Key="Background" Color="#cccccc"/>
-        <SolidColorBrush x:Key="BackgroundOpacity" Color="#cccccc" Opacity="0.5"/>
-
-        <SolidColorBrush x:Key="BackgroundDarker" Color="#b3b3b3"/>
-
-        <SolidColorBrush x:Key="ControlBackground" Color="#a6a6a6"/>
-
-        <System:String x:Key="Version"> 3.0 </System:String>
-        <System:String x:Key="VersionDescription"> (EN-en ONLY) CLOSED ALPHA </System:String>
-        
-        <System:String x:Key="Author"> Jakub Zelmanowicz </System:String>
-
-        <Style x:Key="DefaultText8c" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Foreground" Value="#8c8c8c"/>
-        </Style>
-
-        <Style x:Key="DefaultText73" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Foreground" Value="#737373"/>
-        </Style>
-
-        <Style x:Key="DefaultText73Italic" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI Italic"/>
-            <Setter Property="Foreground" Value="#737373"/>
-        </Style>
-
-        <Style x:Key="DefaultTextBox8c" TargetType="TextBox">
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Foreground" Value="#8c8c8c"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-
-        <Style x:Key="DefaultPasswordBox8c" TargetType="PasswordBox">
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Foreground" Value="#8c8c8c"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-
-        <Style x:Key="ModernButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#8c8c8c"/>
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="FlatButtonStyle" TargetType="Button">
-
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#808080"/>
-            <Setter Property="Cursor" Value="Hand"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="0">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-
-        </Style>
-
-        <Style x:Key="RoundButtonStyle" TargetType="Button">
-
-            <Setter Property="FontFamily" Value="Segoe UI Light"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#808080"/>
-            <Setter Property="Cursor" Value="Hand"/>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="30" Padding="{TemplateBinding Padding}" BorderBrush="#808080" BorderThickness="1">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-
-                        </Grid>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Grid x:Name="grid">
-                                    <Border x:Name="border" CornerRadius="30" Padding="{TemplateBinding Padding}" BorderBrush="#808080" BorderThickness="1">
-                                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                        </ContentPresenter>
-                                    </Border>
-
-                                </Grid>
-                            </ControlTemplate>
-
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary Source="xaml/styles/Buttons.xaml"/>
+                <ResourceDictionary Source="xaml/styles/TextBlocks.xaml"/>
+                <ResourceDictionary Source="xaml/styles/TextBoxes.xaml"/>
+                
+                <ResourceDictionary Source="xaml/Colors.xaml"/>
+                <ResourceDictionary Source="xaml/Strings.xaml"/>
+ 
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
     </Application.Resources>
         

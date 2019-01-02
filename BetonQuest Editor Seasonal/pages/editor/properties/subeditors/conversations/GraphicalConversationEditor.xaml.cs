@@ -65,6 +65,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
             PanelConnection.SetWorkspace(Workspace);
             Connections = new List<PanelConnection>();
+
         }
 
         public GraphicalConversationEditor(Conversation conversation, GCEPresentation presentation)
@@ -102,12 +103,33 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
         // -------- Property Dynamic Creator --------
 
+        private PropertyType propertyType;
+
         public void ShowPropertyDynamicCreator(PropertyType type)
         {
-            Tools.Animations.SlideRight(PropertyDynamicCreator, 275d, .25d, null);
+            Tools.Animations.SlideRight(PropertyDynamicCreator, 300d, .25d, null);
+
+            propertyType = type;
 
             if (type == PropertyType.Event) PropertyDynamicCreatorTitle.Text = "New EVENT";
             else if (type == PropertyType.Condition) PropertyDynamicCreatorTitle.Text = "New CONDITION";
+        }
+
+        private void PropertyDynamicCreatorDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ID.Text) || string.IsNullOrEmpty(Content.Text)) return;
+
+            if (Project.Quest.GetProperty(propertyType, ID.Text) != null) return;
+
+            Property property = new Property(ID.Text, Content.Text);
+            Project.Quest.AddProperty(propertyType, property);
+
+            Tools.Animations.BackgroundColorAnimation(PropertyDynamicCreator, Colors.ForestGreen, .25d, true);
+        }
+
+        private void PropertyAddClose_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Tools.Animations.SlideLeft(PropertyDynamicCreator, 300d, .25d, null);
         }
 
         // --------
@@ -176,8 +198,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
             Panel.SetZIndex(gProperty, 10);
 
-            gProperty.New.MouseDown += PropertyAdd_MouseDown;
-
             gProperty.DeleteItem.Click += DeleteItem_Click;
 
             gProperty.MouseDown += Control_MouseDown;
@@ -190,19 +210,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             Canvas.SetLeft(gProperty, point.X);
 
             Workspace.Children.Add(gProperty);
-        }
-
-        // --------
-
-        private void PropertyAdd_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            PropertyType type = ((sender as TextBlock).Tag as GProperty).Type;
-            ShowPropertyDynamicCreator(type);
-        }
-
-        private void PropertyAddClose_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Tools.Animations.SlideLeft(PropertyDynamicCreator, 275d, .25d, null);
         }
 
         // -------- Scaling the workspace --------
@@ -563,9 +570,16 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
 
         // ---- Test purposes only ----
 
-        private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
+        // ---- Shortcuts (Commands) ----
+
+        private void OpenEventCreator_Command(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.Key == Key.Escape) MainWindow.Instance.Navigate(EditorHub.HubInstance);
+            ShowPropertyDynamicCreator(PropertyType.Event);
+        }
+
+        private void OpenConditionCreator_Command(object sender, ExecutedRoutedEventArgs e)
+        {
+            ShowPropertyDynamicCreator(PropertyType.Event);
         }
 
         // --------
@@ -619,5 +633,14 @@ namespace BetonQuest_Editor_Seasonal.pages.editor.properties.subeditors.conversa
             }
         }
 
+        private void CloseEditorButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.Navigate(EditorHub.HubInstance);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPropertyDynamicCreator(PropertyType.Event);
+        }
     }
 }

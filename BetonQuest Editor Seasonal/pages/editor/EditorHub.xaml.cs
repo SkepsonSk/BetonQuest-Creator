@@ -164,6 +164,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
 
             brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
 
+            button.Foreground = Brushes.White;
             button.Background = brush;
             lastClickedButton = button;
         }
@@ -177,6 +178,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             animation.To = Color.FromRgb(191, 191, 191);
             animation.Duration = TimeSpan.FromSeconds(0.25d);
 
+            button.Foreground = Brushes.Gray;
             brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
             button.Background = brush;
         }

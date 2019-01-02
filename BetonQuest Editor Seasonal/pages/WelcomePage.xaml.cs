@@ -97,11 +97,7 @@ namespace BetonQuest_Editor_Seasonal.pages
 
                 string name = File.ReadAllText(file);
 
-                View view = new View(name, new object[] { id } , true, false, false, "", null);
-               // view.SetHeadFontSize(21d);
-                view.Cursor = Cursors.Hand;
-                view.Margin = new Thickness(0d, 0d, 0d, 10d);
-
+                View view = new View(name, new object[] { id }, true, false, false, "", null) { /* view.SetHeadFontSize(21d); */ Cursor = Cursors.Hand, Margin = new Thickness(0d, 0d, 0d, 10d) };
                 view.MouseDown += Project_MouseDown;
 
                 Projects.Children.Add(view);

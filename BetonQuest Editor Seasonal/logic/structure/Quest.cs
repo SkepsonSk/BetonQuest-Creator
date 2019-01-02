@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BetonQuest_Editor_Seasonal.logic.structure
 {
@@ -174,6 +175,16 @@ namespace BetonQuest_Editor_Seasonal.logic.structure
             }
 
             return null;
+        }
+
+        public void AddProperty(PropertyType type, Property property)
+        { 
+            List<Property> properties = null;
+
+            if (type == PropertyType.Event) properties = Events;
+            else if (type == PropertyType.Condition) properties = Conditions;
+
+            properties.Add(property);
         }
 
         // new style

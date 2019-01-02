@@ -9,6 +9,49 @@
       d:DesignHeight="600" d:DesignWidth="800"
       Title="WelcomePage">
 
+    <Page.Resources>
+
+        <Style x:Key="Shadow" TargetType="Button">
+
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI Light"/>
+
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" BlurRadius="5" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="20" Padding="{TemplateBinding Padding}" BorderBrush="#808080" BorderThickness="0">
+
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0,1.5" StartPoint="0,0.03">
+                                        <GradientStop Color="#00cc00" Offset="0"/>
+                                        <GradientStop Color="#009900" Offset="0.5"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        
+    </Page.Resources>
+    
     <Grid Name="Page">
 
         <DockPanel Name="ProjectsSidepanel" HorizontalAlignment="Left" Panel.ZIndex="2" Background="#bfbfbf">

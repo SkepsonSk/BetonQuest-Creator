@@ -58,8 +58,7 @@ namespace BetonQuest_Editor_Seasonal
                 File.Create(Project.ApplicationDirectory + @"\definitions\" + id + @".txt").Dispose();
                 File.WriteAllLines(Project.ApplicationDirectory + @"\definitions\" + id + @".txt", new string[] { name });
 
-                Project.Quest = new Quest(id);
-                Project.Quest.Name = name;
+                Project.Quest = new Quest(id) { Name = name };
 
                 Console.WriteLine("Project importing: " + Project.Quest.ID + ", " + Project.Quest.Name);
             }

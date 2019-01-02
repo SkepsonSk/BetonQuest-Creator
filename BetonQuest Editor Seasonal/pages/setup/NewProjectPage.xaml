@@ -30,7 +30,7 @@
             <TextBox Style="{StaticResource DefaultTextBox8c}" Name="ProjectNameTextBox" FontSize="20" TextAlignment="Center" TextChanged="ProjectName_TextChanged"/>
             <Separator/>
 
-            <Button Style="{StaticResource ModernButtonStyle}" Padding="5" Name="ContinueButton" Width="200"  FontSize="18" Margin="0, 20, 0, 0" Click="ContinueButton_Click"> Let's carry on! </Button>
+            <Button IsDefault="True" Style="{StaticResource ModernButtonStyle}" Padding="5" Name="ContinueButton" Width="200"  FontSize="18" Margin="0, 20, 0, 0" Click="ContinueButton_Click"> Let's carry on! </Button>
 
         </StackPanel>
         

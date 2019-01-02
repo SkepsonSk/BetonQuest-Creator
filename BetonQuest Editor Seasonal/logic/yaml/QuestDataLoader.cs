@@ -15,64 +15,69 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
 {
     public class QuestDataLoader
     {
-        private string directory;
+
+        private readonly string directory;
+        private Dictionary<string, Conversation> conversationsFiles;
 
         // -------- Initializator --------
 
         public QuestDataLoader(string directory)
         {
             this.directory = directory;
+            conversationsFiles = new Dictionary<string, Conversation>();
 
-            LoadMain();
             LoadProperties("events.yml", Project.Quest.Events);
             LoadProperties("conditions.yml", Project.Quest.Conditions);
             LoadProperties("objectives.yml", Project.Quest.Objectives);
             LoadProperties("journal.yml", Project.Quest.JournalEntries);
             LoadProperties("items.yml", Project.Quest.Items);
-            LoadConversations();
+
+            foreach (string conversationFile in Directory.GetFiles(directory + @"\conversations")) LoadConversation(conversationFile);
+            ApplyConversationIDs();
         }
 
         // --------- Loaders --------
 
-        private void LoadMain()
+        private void ApplyConversationIDs()
         {
-            string file = directory + @"\main.yml";
+            string mainFile = directory + @"\main.yml";
 
-            if (!File.Exists(file)) return;
+            YamlStream mainStream;
+            YamlMappingNode mainRoot;
 
-            using (StringReader reader = new StringReader(File.ReadAllText(file)))
+            using (StringReader mainReader = new StringReader(File.ReadAllText(mainFile)))
             {
-                YamlStream stream = new YamlStream();
-                stream.Load(reader);
+                mainStream = new YamlStream();
+                mainStream.Load(mainReader);
 
-                if (stream.Documents.Count == 0) return;
-
-                YamlMappingNode root = (YamlMappingNode)stream.Documents[0].RootNode;
-
-                int npcID;
-                string npcName;
-
-                foreach (var node in root.Children)
+                if (mainStream.Documents.Count != 0)
                 {
-                    YamlScalarNode scalar = node.Key as YamlScalarNode;
-                    if (scalar.Value.Equals("npcs", StringComparison.InvariantCultureIgnoreCase))
+                    mainRoot = (YamlMappingNode)mainStream.Documents[0].RootNode;
+
+                    foreach (var mainOption in mainRoot.Children)
                     {
-                        YamlMappingNode npcSet = node.Value as YamlMappingNode;
 
-                        foreach (var npc in npcSet.Children)
-                        {
-                            YamlScalarNode npcIDNode = npc.Key as YamlScalarNode;
-                            YamlScalarNode npcNameNode = npc.Value as YamlScalarNode;
+                        YamlScalarNode option = mainOption.Key as YamlScalarNode;
+                        if (option.Value.Equals("npcs", StringComparison.InvariantCultureIgnoreCase)){
 
-                            npcID = int.Parse(npcIDNode.Value);
-                            npcName = npcNameNode.Value;
+                            YamlMappingNode npcs = mainOption.Value as YamlMappingNode;
+                            foreach (var npc in npcs.Children)
+                            {
+                                YamlScalarNode npcIDNode = npc.Key as YamlScalarNode;
+                                YamlScalarNode npcFileName = npc.Value as YamlScalarNode;
+                                int npcID = int.Parse(npcIDNode.Value);
 
-                            Project.Quest.Conversations.Add(new Conversation(npcName, npcID));
-                            Console.WriteLine(npcID + " " + npcName);
+                                Conversation conversation = conversationsFiles[npcFileName.Value];
+                                conversation.NPCID = npcID;               
+                            }
+
                         }
+
                     }
+
                 }
             }
+
         }
 
         private void LoadProperties(string file, List<Property> properties)
@@ -97,73 +102,74 @@ namespace BetonQuest_Editor_Seasonal.logic.yaml
             }
         }
 
-        private void LoadConversations()
+        public void LoadConversation(string conversationFile)
         {
-            if (!Directory.Exists(directory + @"\conversations")) return;
+            string conversationFileName = conversationFile.Substring(conversationFile.LastIndexOf('\\') + 1);
+            conversationFileName = conversationFileName.Substring(0, conversationFileName.LastIndexOf('.'));
 
-            foreach (string file in Directory.GetFiles(directory + @"\conversations"))
+            YamlStream conversationStream;
+            YamlMappingNode rootConversationNode;
+            string key, value;
+
+            Conversation conversation = null;
+            Statement statement;
+            bool isNpcStatement;
+
+            using (StringReader conversationReader = new StringReader(File.ReadAllText(conversationFile)))
             {
-                using (StringReader reader = new StringReader(File.ReadAllText(file)))
+                conversationStream = new YamlStream();
+                conversationStream.Load(conversationReader);
+
+                rootConversationNode = (YamlMappingNode)conversationStream.Documents[0].RootNode;
+            }
+
+            foreach (var keyValuePair in rootConversationNode.Children)
+            {
+                if (keyValuePair.Value.NodeType == YamlNodeType.Scalar)
                 {
-                    YamlStream stream = new YamlStream();
-                    stream.Load(reader);
+                    key = ((YamlScalarNode) keyValuePair.Key).Value;
+                    value = ((YamlScalarNode) keyValuePair.Value).Value;
 
-                    YamlMappingNode root = (YamlMappingNode)stream.Documents[0].RootNode;
-
-                    Conversation conversation = null;
-                    Statement statement;
-                    bool npc;
-
-                    foreach (var readType in root.Children)
+                    if (key.Equals("quester", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (readType.Value.NodeType == YamlNodeType.Scalar)
-                        {
-                            string key = ((YamlScalarNode)readType.Key).Value;
-                            string value = ((YamlScalarNode)readType.Value).Value;
-
-                            if (key.Equals("quester", StringComparison.InvariantCultureIgnoreCase)) conversation = Project.Quest.GetConversation(value);
-                            if (key.Equals("first", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                if (conversation == null)
-                                {
-                                    MessageBox.Show("error in file with: " + file);
-                                    return;
-                                }
-                                conversation.StartStatementsList = value;
-                            }
-                        }
-                        else if (readType.Value.NodeType == YamlNodeType.Mapping)
-                        {
-
-                            npc = ((YamlScalarNode)readType.Key).Value.Equals("NPC_options", StringComparison.InvariantCultureIgnoreCase);
-
-                            YamlMappingNode type = readType.Value as YamlMappingNode;
-                            foreach (var readStatement in type.Children)
-                            {
-                                YamlMappingNode readStatementProperties = readStatement.Value as YamlMappingNode;
-                                statement = new Statement(((YamlScalarNode)readStatement.Key).Value);
-
-                                foreach (var readProperty in readStatementProperties.Children)
-                                {
-                                    string property = ((YamlScalarNode)readProperty.Key).Value;
-                                    string value = ((YamlScalarNode)readProperty.Value).Value;
-
-                                    if (property.Equals("text", StringComparison.InvariantCultureIgnoreCase)) statement.Content = value;
-                                    else if (property.Equals("events", StringComparison.InvariantCultureIgnoreCase) || property.Equals("event", StringComparison.InvariantCultureIgnoreCase)) statement.EventsList = value;
-                                    else if (property.Equals("conditions", StringComparison.InvariantCultureIgnoreCase) || property.Equals("condition", StringComparison.InvariantCultureIgnoreCase)) statement.ConditionsList = value;
-                                    else if (property.Equals("pointers", StringComparison.InvariantCultureIgnoreCase) || property.Equals("pointer", StringComparison.InvariantCultureIgnoreCase)) statement.NextStatementsList = value;
-                                }
-
-                                if (npc) conversation.NPCStatements.Add(statement);
-                                else conversation.PlayerStatements.Add(statement);
-
-                            }
-                        }
+                        conversation = new Conversation(value, 0);
+                        conversationsFiles.Add(conversationFileName, conversation);
+                        Project.Quest.Conversations.Add(conversation);
                     }
-                    conversation.ApplyPreStartStatements();
-                    conversation.CreateStatementsConnections();
+                    else if (key.Equals("first", StringComparison.InvariantCultureIgnoreCase)) conversation.StartStatementsList = value;
+                }
+                else if (keyValuePair.Value.NodeType == YamlNodeType.Mapping)
+                {
+                    isNpcStatement = ((YamlScalarNode)keyValuePair.Key).Value.Equals("NPC_options", StringComparison.InvariantCultureIgnoreCase);
+
+                    YamlMappingNode statements = keyValuePair.Value as YamlMappingNode;
+                    foreach (var conversationStatement in statements.Children)
+                    {
+                        YamlMappingNode readStatementProperties = conversationStatement.Value as YamlMappingNode;
+                        statement = new Statement(((YamlScalarNode) conversationStatement.Key).Value);
+
+                        foreach (var readProperty in readStatementProperties.Children)
+                        {
+                            key = ((YamlScalarNode)readProperty.Key).Value;
+                            value = ((YamlScalarNode)readProperty.Value).Value;
+
+                            if (key.Equals("text", StringComparison.InvariantCultureIgnoreCase)) statement.Content = value;
+                            else if (key.Equals("events", StringComparison.InvariantCultureIgnoreCase) || key.Equals("event", StringComparison.InvariantCultureIgnoreCase)) statement.EventsList = value;
+                            else if (key.Equals("conditions", StringComparison.InvariantCultureIgnoreCase) || key.Equals("condition", StringComparison.InvariantCultureIgnoreCase)) statement.ConditionsList = value;
+                            else if (key.Equals("pointers", StringComparison.InvariantCultureIgnoreCase) || key.Equals("pointer", StringComparison.InvariantCultureIgnoreCase)) statement.NextStatementsList = value;
+                        }
+
+                        if (isNpcStatement) conversation.NPCStatements.Add(statement);
+                        else conversation.PlayerStatements.Add(statement);
+
+                    }
+
                 }
             }
+            conversation.ApplyPreStartStatements();
+            conversation.CreateStatementsConnections();
+
         }
+
     }
 }

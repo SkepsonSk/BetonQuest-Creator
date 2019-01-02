@@ -9,13 +9,14 @@
       Background="{StaticResource Background}"
       MouseDown="Workspace_MouseDown"
       Title="GraphicalConversationEditor"
-      PreviewKeyDown="Page_PreviewKeyDown"
       RenderOptions.BitmapScalingMode="NearestNeighbor">
 
     <Grid>
 
         <Grid Panel.ZIndex="2">
 
+            <Button IsCancel="True" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseEditorButton_Click" Opacity="0">✖</Button>
+            
             <StackPanel Name="WelcomeText" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="30" TextAlignment="Center"> Hey there!</TextBlock>
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="24" TextAlignment="Center"> to begin, just right-click ;) </TextBlock>
@@ -37,18 +38,18 @@
 
             <StackPanel Name="PropertyDynamicCreator" HorizontalAlignment="Left" Background="#b3b3b3" Width="0">
                 
-                <TextBlock FontSize="16" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand" MouseDown="PropertyAddClose_MouseDown"> ✖</TextBlock>
+                <TextBlock FontSize="16" Foreground="#ff4d4d" HorizontalAlignment="Right" Margin="0, 20, 20, 0" Cursor="Hand" MouseDown="PropertyAddClose_MouseDown"> ✖ </TextBlock>
                 <TextBlock Name="PropertyDynamicCreatorTitle" Style="{StaticResource DefaultText73}" FontSize="26" Margin="20, 20, 75, 20"> New PROPERTY </TextBlock>
                 
                 <TextBlock Style="{StaticResource DefaultText73}"  FontSize="18" Margin="20, 0, 0, 0"> ID </TextBlock>
-                <TextBox Style="{StaticResource DefaultTextBox8c}" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
+                <TextBox Name="ID" Style="{StaticResource DefaultTextBox8c}" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
                 <Separator Margin="20, 0, 20, 0"/>
 
                 <TextBlock Style="{StaticResource DefaultText73}" FontSize="18" Margin="20, 20, 0, 0"> Content </TextBlock>
-                <TextBox Style="{StaticResource DefaultTextBox8c}" AcceptsReturn="True" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
+                <TextBox Name="Content" Style="{StaticResource DefaultTextBox8c}" AcceptsReturn="True" Foreground="#737373" FontSize="18" Margin="20, 5, 20, 0"/>
                 <Separator Margin="20, 0, 20, 0"/>
 
-                <Button Style="{StaticResource ModernButtonStyle}" Foreground="ForestGreen" BorderBrush="ForestGreen" Padding="5" FontSize="20" Margin="20, 50, 20, 20">Done! </Button>
+                <Button Style="{StaticResource ModernButtonStyle}" Foreground="ForestGreen" BorderBrush="ForestGreen" Padding="5" FontSize="20" Margin="20, 50, 20, 20" Click="PropertyDynamicCreatorDoneButton_Click"> Done! </Button>
                 
             </StackPanel>
             
@@ -75,7 +76,7 @@
                 <Canvas.ContextMenu>
                     <ContextMenu>
 
-                        <MenuItem Header="New STATEMENT">
+                        <MenuItem Header="New STATEMENT..." Margin="0, 0, 0, 10">
                             <MenuItem Header="Player" Click="CreatePlayerStatement_MenuItem_Click"/>
                             <MenuItem Header="NPC" Click="CreateNPCStatement_MenuItem_Click"/>
                         </MenuItem>
@@ -83,6 +84,14 @@
                         <MenuItem Header="Add EVENT" Click="CreateEvent_MenuItem_Click"/>
                         <MenuItem Header="Add CONDITION" Click="CreateCondition_MenuItem_Click"/>
 
+                        <MenuItem Header="Create..." Margin="0, 10, 0, 0">
+                            <MenuItem Header="Event" Click="MenuItem_Click">
+                                <MenuItem.InputBindings>
+                                    <KeyBinding Key="E" Modifiers="Ctrl"/>
+                                </MenuItem.InputBindings>
+                            </MenuItem>
+                        </MenuItem>
+                        
                     </ContextMenu>
 
                 </Canvas.ContextMenu>
