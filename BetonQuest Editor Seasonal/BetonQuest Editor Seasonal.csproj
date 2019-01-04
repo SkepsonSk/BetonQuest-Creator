@@ -62,7 +62,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>paper32-28.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetZip, Version=1.11.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
@@ -160,7 +160,6 @@
     <Compile Include="logic\online\Project.cs" />
     <Compile Include="logic\online\ProjectUpload.cs" />
     <Compile Include="logic\online\Request.cs" />
-    <Compile Include="logic\online\UpdateManager.cs" />
     <Compile Include="logic\structure\items\enchanting\EnchantPack.cs" />
     <Compile Include="logic\structure\conversating\Conversation.cs" />
     <Compile Include="logic\structure\conversating\Statement.cs" />
@@ -173,7 +172,6 @@
     <Compile Include="logic\structure\Quest.cs" />
     <Compile Include="logic\structure\QuestDataImage.cs" />
     <Compile Include="logic\structure\StatementType.cs" />
-    <Compile Include="logic\yaml\ConversationData.cs" />
     <Compile Include="logic\yaml\QuestDataLoader.cs" />
     <Compile Include="logic\yaml\QuestDataSaver.cs" />
     <Compile Include="pages\editor\EditorHub.xaml.cs">
@@ -227,24 +225,6 @@
     <Compile Include="pages\management\ExploratorPage.xaml.cs">
       <DependentUpon>ExploratorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\online\ConnectingPage.xaml.cs">
-      <DependentUpon>ConnectingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\online\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\online\market\MarketMainPage.xaml.cs">
-      <DependentUpon>MarketMainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\online\market\subpages\MarketWelcomePage.xaml.cs">
-      <DependentUpon>MarketWelcomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\online\market\subpages\QuestsPage.xaml.cs">
-      <DependentUpon>QuestsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\online\RegisterPage.xaml.cs">
-      <DependentUpon>RegisterPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="pages\settings\EnchantsSettingsPage.xaml.cs">
       <DependentUpon>EnchantsSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -252,7 +232,6 @@
       <DependentUpon>SettingsHub.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project.cs" />
-    <Compile Include="ServerSession.cs" />
     <Compile Include="Tools.cs" />
     <Page Include="controls\ConversationView.xaml">
       <SubType>Designer</SubType>
@@ -387,30 +366,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\online\ConnectingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\online\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\online\market\MarketMainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\online\market\subpages\MarketWelcomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\online\market\subpages\QuestsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\online\RegisterPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="pages\settings\EnchantsSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -497,9 +452,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="logic\pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="graphics\Discord.png" />
   </ItemGroup>
@@ -510,7 +463,13 @@
     <Resource Include="graphics\market\DefaultProfileImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="graphics\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="paper.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="paper32-28.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

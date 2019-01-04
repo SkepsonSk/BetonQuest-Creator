@@ -16,7 +16,6 @@
                 <ResourceDictionary Source="xaml/Colors.xaml"/>
                 <ResourceDictionary Source="xaml/Strings.xaml"/>
  
-                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

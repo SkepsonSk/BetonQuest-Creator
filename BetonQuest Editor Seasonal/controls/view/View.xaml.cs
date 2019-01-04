@@ -21,8 +21,6 @@ namespace BetonQuest_Editor_Seasonal.controls
 
         private object[] data;
 
-        private TextBlock head;
-
         private bool acceptsLeftClick;
         private bool acceptsRightClick;
 

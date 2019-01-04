@@ -54,11 +54,19 @@
     
     <Grid Name="Page">
 
-        <DockPanel Name="ProjectsSidepanel" HorizontalAlignment="Left" Panel.ZIndex="2" Background="#bfbfbf">
-            <TextBlock Style="{StaticResource DefaultText73}" DockPanel.Dock="Top" FontSize="30" Margin="10, 10" Padding="10"> Your projects</TextBlock>
-            <Button Style="{StaticResource ModernButtonStyle}" DockPanel.Dock="Bottom" FontSize="18" Margin="10, 10, 10, 10" Padding="5" Foreground="Firebrick" BorderBrush="Firebrick" Click="CloseSidepanelButton_Click">Close sidepanel</Button>
+        <DockPanel Name="ProjectsSidepanel" HorizontalAlignment="Left" Panel.ZIndex="2" Background="#bfbfbf" Width="0">
 
-            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0, 10, 00, 0">
+            <Grid DockPanel.Dock="Top" Margin="20, 15, 20, 25">
+
+                <StackPanel>
+                    <TextBlock Style="{StaticResource DefaultText73}" FontSize="28" > Your projects</TextBlock>
+                    <TextBlock Style="{StaticResource DefaultText73}" FontSize="20" > Click to load </TextBlock>
+                </StackPanel>
+                
+                <TextBlock FontSize="20" Foreground="#ff4d4d" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" MouseDown="TextBlock_MouseDown"> ✖</TextBlock>
+            </Grid>
+           
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
                 <StackPanel Name="Projects"/>
             </ScrollViewer>
         </DockPanel>
@@ -67,7 +75,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="1.75*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -81,16 +89,9 @@
                 <Image Width="50" Height="50"  RenderOptions.BitmapScalingMode="HighQuality" Source="/graphics/Facebook.png" Margin="2.5, 0, 0, 0" Cursor="Hand" MouseDown="Facebook_MouseDown"/>
             </WrapPanel>
 
-            <WrapPanel Grid.Column="2" HorizontalAlignment="Right" Margin="0, 5, 10, 0" Visibility="Collapsed">
-                <TextBlock Name="LoggedInUser" Style="{StaticResource DefaultText73}" Visibility="Collapsed" FontSize="15" VerticalAlignment="Center" Margin="0, 0, 5, 0"> Username</TextBlock>
-                <Button Name="OfflineButton" Style="{StaticResource ModernButtonStyle}" Visibility="Collapsed" Foreground="Firebrick" BorderBrush="Firebrick" VerticalAlignment="Center" FontSize="15" Padding="8.5" Margin="0, 0, 2.5, 0" Click="OfflineButton_Click">Offline</Button>
-                <Button Name="OnlineButton" Style="{StaticResource ModernButtonStyle}" VerticalAlignment="Center" FontSize="15" Padding="8.5" Click="OnlineButton_Click">Online</Button>
-
-            </WrapPanel>
-
             <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
 
-                <Image Width="96" Height="auto" Source="/graphics/Appa.png" Grid.Column="1" Margin="0, 0, 0, 10" MouseDown="Image_MouseDown"/>
+                <Image Width="128" Height="auto" Source="/graphics/Logo.png" Grid.Column="1" Margin="0, 0, 0, 10"/>
 
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="30" HorizontalAlignment="Center"> Welcome to the BetonQuest EDITOR!</TextBlock>
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="25" HorizontalAlignment="Center"> Let's do something, ey?</TextBlock>
@@ -99,7 +100,6 @@
                     <Button Style="{StaticResource ModernButtonStyle}" Padding="5" FontSize="20" Click="NewButton_Click">New</Button>
                     <Button Style="{StaticResource ModernButtonStyle}" Padding="5" FontSize="20" Margin="10, 0, 0, 0" Click="OpenButton_Click">Open</Button>
                     <Button Style="{StaticResource ModernButtonStyle}" Padding="5" FontSize="20" Margin="20, 0, 0, 0" Click="ImportButton_Click">Import</Button>
-                    <Button Name="MarketButton" Style="{StaticResource ModernButtonStyle}" Visibility="Collapsed" Padding="5" FontSize="20" Margin="20, 0, 0, 0" Click="MarketButton_Click">Market</Button>
                 </WrapPanel>
 
                 <WrapPanel Name="LastProject" Visibility="Collapsed" Margin="0, 10, 0, 0" HorizontalAlignment="Center">
@@ -107,12 +107,6 @@
                     <TextBlock Style="{StaticResource DefaultText73}"  Name="LastProjectName" FontSize="15" Margin="2.5, 0, 0, 0" Cursor="Hand" MouseDown="LastProjectName_MouseDown"> PROJECT</TextBlock>
                 </WrapPanel>
 
-            </StackPanel>
-
-            <StackPanel Name="UpdatePanel" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0" IsEnabled="False">
-                <TextBlock Name="UpdateVersion"  Style="{StaticResource DefaultText73}" TextAlignment="Center" FontSize="16" > version</TextBlock>
-                <TextBlock Name="DirectDownload" Style="{StaticResource DefaultText73}" TextAlignment="Center" FontSize="14" Cursor="Hand"> Click here to  <Span Foreground="#ff9933" MouseDown="DirectUpdateDownload_MouseDown"> download update directly! </Span></TextBlock>
-                <TextBlock Name="WebsiteDownload" Style="{StaticResource DefaultText73}" TextAlignment="Center" FontSize="14" Cursor="Hand" MouseDown="GoToWebsite_MouseDown"> Click here to  <Span Foreground="#ff9933"> go to the official website! </Span></TextBlock>
             </StackPanel>
 
             <WrapPanel  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 10, 10">
@@ -124,7 +118,7 @@
 
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="15" HorizontalAlignment="Left">
                 <Run Text="{StaticResource Version}"/>
-                <Run Text="{StaticResource VersionDescription}"/>
+                <Run Text="{StaticResource VersionDescription}" FontSize="12"/>
                 </TextBlock>
 
                 <TextBlock Style="{StaticResource DefaultText8c}" FontSize="12" HorizontalAlignment="Left" Text="{StaticResource Author}"/>

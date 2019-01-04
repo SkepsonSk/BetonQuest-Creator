@@ -35,23 +35,7 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
         public EditorStartPage()
         {
             InitializeComponent();
-
             ProjectNameTextBox.Text = Project.Quest.Name;
-
-            if (ServerSession.CurrentSession == null)
-            {
-                OnlineOptions.Visibility = Visibility.Collapsed;
-            }
-            else if (ServerSession.CurrentSession.AuthorizationKey != null)
-            {
-                PublicationStatus.Text = "Project is published!";
-                PublishButton.Content = "Update";
-                RemoveButton.Visibility = Visibility.Visible;  
-            }
-            else
-            {
-                OnlineOptions.Visibility = Visibility.Collapsed;
-            }
         }
 
         // -------- Events --------
@@ -158,42 +142,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
         {
             //Tools.CompressProject(Project.Quest, Project.ApplicationDirectory + @"\temp\" + Project.Quest.Name + ".zip", true);
             new ProjectUpload(Project.Quest);
-        }
-
-        private async void PublishProjectButton_Click(object sender, RoutedEventArgs e)
-        {
-            PublishButton.Visibility = Visibility.Collapsed;
-            RemoveButton.Visibility = Visibility.Collapsed;
-            MarketButton.Visibility = Visibility.Collapsed;
-
-            if (Project.Quest.Online) PublicationStatus.Text = "Project is being UPDATED...";
-            else PublicationStatus.Text = "Project is being PUBLISHED...";
-
-            string respond = await ServerSession.CurrentSession.UploadCurrentProject();
-
-            if (respond == null) EditorHub.HubInstance.Alert("Failed to upload project!", AlertType.Error);
-            else
-            {
-                if (respond == "published")
-                {
-                    EditorHub.HubInstance.Alert("Project has been published!", AlertType.Success);
-                    PublicationStatus.Text = "Project has been published!";
-                }
-                else if (respond == "updated")
-                {
-                    EditorHub.HubInstance.Alert("Project has been updated!", AlertType.Success);
-                    PublicationStatus.Text = "Project has been updated!";
-                }
-
-                Project.Quest.Online = true;
-                PublishButton.Content = "Update";
-
-                PublishButton.Visibility = Visibility.Visible;
-                RemoveButton.Visibility = Visibility.Visible;
-                MarketButton.Visibility = Visibility.Visible;
-
-            } 
-
         }
 
     }

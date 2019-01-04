@@ -37,6 +37,7 @@ namespace BetonQuest_Editor_Seasonal.pages
         public LoadingPage(string path)
         {
             InitializeComponent();
+
             this.path = path;
 
             MainWindow.Instance.NavigatorFree += BeginLoadingProject;
@@ -57,25 +58,6 @@ namespace BetonQuest_Editor_Seasonal.pages
             JournalPreparator.Navigate(new JournalPage());
             ItemsPreparator.Navigate(new ItemsPage());
             StatementsPreparator.Navigate(new StatementEditor());
-
-            if (ServerSession.CurrentSession != null && !string.IsNullOrEmpty(ServerSession.CurrentSession.AuthorizationKey)) CheckOnline();
-            else
-            {
-                Console.WriteLine("loading");
-                MainWindow.Instance.Navigate(new EditorHub());
-            }
-        }
-
-        private async void CheckOnline()
-        {
-            Dictionary<string, string> request = new Dictionary<string, string>();
-            request["userid"] = ServerSession.CurrentSession.UserID;
-            request["authkey"] = ServerSession.CurrentSession.AuthorizationKey;
-            request["projectid"] = Project.Quest.ID;
-
-            string json = await Tools.Communication.Communicate(request, "http://localhost/bqe_online/project_services/locateproject_service.php");
-            Console.WriteLine(json);
-            Project.Quest.Online = bool.Parse((string) JObject.Parse(json)["message"]);
 
             MainWindow.Instance.Navigate(new EditorHub());
         }

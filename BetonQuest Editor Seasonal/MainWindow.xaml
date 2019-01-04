@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:BetonQuest_Editor_Seasonal"
         mc:Ignorable="d"
         Background="#cccccc"
-        Title="BetonQuest Editor - Hello!" Height="600" Width="1000">
+        Title="BetonQuest Editor - Hello!" Height="600" Width="1000"
+        MinWidth="800"
+        MinHeight="600">
 
     <Grid>
 

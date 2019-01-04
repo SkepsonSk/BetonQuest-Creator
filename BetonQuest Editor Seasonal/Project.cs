@@ -34,8 +34,6 @@ namespace BetonQuest_Editor_Seasonal
         public static string LastEditedProjectName;
         public static string LastEditedProjectPath;
 
-        public static UpdateManager UpdateManager;
-
         // -------- File System --------
 
         public static void VerifyDirectories()
@@ -171,8 +169,7 @@ namespace BetonQuest_Editor_Seasonal
         {
             string id = Tools.GenerateID(24);
 
-            Quest = new Quest(id);
-            Quest.Name = name;
+            Quest = new Quest(id) { Name = name };
 
             new ConversationsPage();
             new EventsPage();

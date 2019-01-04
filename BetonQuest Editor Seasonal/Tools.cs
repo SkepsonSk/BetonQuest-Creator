@@ -34,8 +34,7 @@ namespace BetonQuest_Editor_Seasonal
             
             public static void AddEmptyView(StackPanel panel, string message)
             {
-                View view = new View(message, null, false, false);
-                view.Background = new SolidColorBrush(Colors.Transparent);
+                View view = new View(message, null, false, false) { Background = new SolidColorBrush(Colors.Transparent) } ;
                 view.Head.HorizontalAlignment = HorizontalAlignment.Center;
                 view.Head.FontSize = 20;
 
@@ -205,68 +204,6 @@ namespace BetonQuest_Editor_Seasonal
 
                 brush.BeginAnimation(SolidColorBrush.ColorProperty, animation);
                 control.Background = brush;
-            }
-
-        }
-
-        public static class Communication
-        {
-
-            private static HttpClient client = new HttpClient();
-
-            public static async Task<string> Communicate(Dictionary<string, string> values, string url)
-            {
-                MultipartFormDataContent form = new MultipartFormDataContent();
-
-                if (values != null)
-                {
-                    foreach (KeyValuePair<string, string> entry in values) form.Add(new StringContent(entry.Value), entry.Key);
-                }
-              
-                HttpResponseMessage response = await client.PostAsync(url, form);
-
-                response.EnsureSuccessStatusCode();
-                return response.Content.ReadAsStringAsync().Result;
-            }
-
-            public static async Task<string> UploadProjectToFTP(Quest quest, string user, string password)
-            {
-
-                MultipartFormDataContent form = new MultipartFormDataContent();
-
-                HttpResponseMessage response = await client.PostAsync("http://avatarserv.pl:8125", form);
-
-                response.EnsureSuccessStatusCode();
-
-                form.Dispose();
-
-                return await response.Content.ReadAsStringAsync();
-            }
-
-            public static async Task<string> UploadProject(string path, string name, string id, bool delete = true)
-            {
-                if (ServerSession.CurrentSession == null) return null;
-                if (string.IsNullOrEmpty(ServerSession.CurrentSession.Username) || string.IsNullOrEmpty(ServerSession.CurrentSession.AuthorizationKey)) return null;
-
-                MultipartFormDataContent form = new MultipartFormDataContent();
-
-                byte[] file = File.ReadAllBytes(path);
-
-                form.Add(new StringContent(ServerSession.CurrentSession.UserID), "userid");
-                form.Add(new StringContent(ServerSession.CurrentSession.AuthorizationKey), "authkey");
-                form.Add(new StringContent(id), "projectid");
-                form.Add(new StringContent(name), "projectname");
-                form.Add(new ByteArrayContent(file), "project", "project");
-
-                HttpResponseMessage response = await client.PostAsync("http://localhost/bqe_online/project_services/uploadproject_service.php", form);
-
-                response.EnsureSuccessStatusCode();
-
-                form.Dispose();
-
-                if (delete) File.Delete(path);
-
-                return response.Content.ReadAsStringAsync().Result;
             }
 
         }

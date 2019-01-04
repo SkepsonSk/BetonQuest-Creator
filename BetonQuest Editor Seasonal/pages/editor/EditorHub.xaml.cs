@@ -36,8 +36,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             InitializeComponent();
             hubInstance = this;
 
-            Toolbar.Height = 0;
-
             NavigatorFrame.Content = new EditorStartPage();
 
             AlertBar.Height = 0d;
@@ -242,26 +240,6 @@ namespace BetonQuest_Editor_Seasonal.pages.editor
             }
 
             NavigatorFrame.Navigate(page);
-        }
-
-        // -------- Toolbar --------
-        // ---- Will be moved to MainWindow soon
-
-        private void SwitchToolbar_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Toolbar.Height == 0d)
-            {
-                Tools.Animations.SlideDown(Toolbar, 40d, .25d, null);
-                ToolbarPanel.Visibility = Visibility.Collapsed;
-            }
-            else Tools.Animations.SlideUp(Toolbar, 40d, .25d, ShowToolbarPanel);
-        }
-
-        private void ShowToolbarPanel(object sender, EventArgs e)
-        {
-            ToolbarPanel.Opacity = 0d;
-            ToolbarPanel.Visibility = Visibility.Visible;
-            Tools.Animations.FadeIn(ToolbarPanel, .25d, null);
         }
 
         // ---- Needs upgrade

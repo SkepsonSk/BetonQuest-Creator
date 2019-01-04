@@ -37,47 +37,16 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <TextBlock Name="AlertText" FontSize="14" VerticalAlignment="Center" Margin="10, 0, 0, 0"> !ALERT! </TextBlock>
+
+            <TextBlock Name="AlertText" FontSize="14" VerticalAlignment="Center" Margin="10, 0, 0, 0"> !ALERT!</TextBlock>
 
             <WrapPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
 
                 <Button Name="ActionButton" Style="{StaticResource ModernButtonStyle}" Padding="2" Foreground="White" BorderBrush="White" Margin="0, 0, 5, 0" Click="ActionButton_Click">Action</Button>
                 <Button Name="ActionSettings" Style="{StaticResource ModernButtonStyle}" Padding="2" Foreground="White" BorderBrush="White" Margin="0, 0, 10, 0">Settings</Button>
 
-            </WrapPanel>            
+            </WrapPanel>
         </Grid >
-
-        <StackPanel Name="ToolbarPanel" DockPanel.Dock="Bottom" Background="Transparent">
-            <TextBlock Name="SwitchToolbar" Style="{StaticResource DefaultText8c}" TextAlignment="Center" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Cursor="Hand" Margin="0, 0, 10, 0" MouseDown="SwitchToolbar_MouseDown"> ▲ </TextBlock>
-        </StackPanel>
-
-        <DockPanel Name="Toolbar" DockPanel.Dock="Bottom" Margin="0, 0, 10, 2.5" Background="Transparent">
-
-            <WrapPanel DockPanel.Dock="Right" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" FontSize="20" Width="40" Height="40" Click="UndoButton_Click">&lt;</Button>
-                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Center" FontSize="20" Width="40" Height="40" Click="RedoButton_Click">&gt;</Button>
-                
-                <TextBlock  Style="{StaticResource DefaultText8c}" FontSize="15" VerticalAlignment="Bottom" Margin="5, 0, 0, 0" Cursor="Hand" MouseDown="SwitchToolbar_MouseDown"> ▼ </TextBlock>
-            </WrapPanel>
-            
-            <WrapPanel DockPanel.Dock="Left" Margin="20, 0, 0, 0" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Cursor="Hand">Save</Button>
-                <TextBlock Style="{StaticResource DefaultText8c}" Foreground="#ff9933" VerticalAlignment="Center" FontSize="20" Margin="5, 0, 5, 0">-</TextBlock>
-                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Cursor="Hand">Export</Button>
-                <TextBlock Style="{StaticResource DefaultText8c}" Foreground="#ff9933" VerticalAlignment="Center" FontSize="20" Margin="5, 0, 5, 0">-</TextBlock>
-                <Button Style="{StaticResource FlatButtonStyle}" Foreground="#ff9933" FontSize="18" Margin="0, 0, 15, 0" Cursor="Hand">Upload</Button>
-                
-                <Rectangle VerticalAlignment="Stretch" Width="1" Margin="2" Stroke="#8c8c8c" />
-                
-                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="15, 0, 5, 0" Cursor="Hand">New</Button>
-                <TextBlock Style="{StaticResource DefaultText8c}" VerticalAlignment="Center" FontSize="20"> - </TextBlock>
-                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="5, 0, 5, 0" Cursor="Hand">Open</Button>
-                <TextBlock Style="{StaticResource DefaultText8c}" VerticalAlignment="Center" FontSize="20"> -</TextBlock>
-                <Button Style="{StaticResource FlatButtonStyle}" FontSize="18" Margin="5, 0, 0, 0" Cursor="Hand">Welcome page</Button>
-            </WrapPanel>
-            
-        </DockPanel>
 
         <Frame Name="NavigatorFrame" NavigationUIVisibility="Hidden"/>
 
